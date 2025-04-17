@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image"
 import Link from "next/link"
 import HeaderPortfolio from "@/components/header-portfolio"
 import Footer from "@/components/footer"
-import homeSessionAbout from "@/components/homesessionAbout"
 import AboutUs from "@/components/homesessionabout/page"
+import AnimatedSection from "@/components/animated-section"
 
 export default function Home() {
   return (
@@ -20,7 +22,7 @@ export default function Home() {
 
         <main>
           {/* Hero Section */}
-          <section className="relative h-screen w-full">
+          <AnimatedSection className="relative h-screen w-full" delay={0.2} direction="up">
             <div className="absolute inset-0">
               <Image
                 src="/placeholder.svg?height=1080&width=1920"
@@ -35,13 +37,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </section>
+          </AnimatedSection>
 
           {/* About Us Section */}
           <AboutUs />
 
           {/* Portfolio Preview */}
-          <section className="relative h-screen w-full flex flex-col items-center justify-center">
+          <AnimatedSection className="relative h-screen w-full flex flex-col items-center justify-center" delay={0.3} direction="up">
             {/* Background container - sẽ được thay thế bằng ảnh hoặc video */}
             <div className="absolute inset-0 bg-black/80 z-0"></div>
 
@@ -82,7 +84,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </section>
+          </AnimatedSection>
         </main>
 
         <Footer />

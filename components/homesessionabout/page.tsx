@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import AnimatedSection from "@/components/animated-section"
 
 export default function AboutUs() {
   const tabletRef = useRef<HTMLDivElement>(null)
@@ -23,7 +24,7 @@ export default function AboutUs() {
   }, [])
 
   return (
-    <section className="relative h-screen w-full text-white flex flex-col items-center justify-center">
+    <AnimatedSection className="relative h-screen w-full text-white flex flex-col items-center justify-center" delay={0.2} direction="up">
       {/* Background container - sẽ được thay thế bằng ảnh hoặc video */}
       <div className="absolute inset-0 bg-gray-500/90 z-0"></div>
 
@@ -147,6 +148,6 @@ export default function AboutUs() {
           </div>
         </div>
         </div>
-    </section>
+    </AnimatedSection>
   )
 }
