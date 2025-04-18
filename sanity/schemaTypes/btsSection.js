@@ -1,5 +1,3 @@
-import { orderRankField } from '@sanity/orderable-document-list'
-
 export default {
   name: 'btsSection',
   title: 'Hậu Trường',
@@ -15,7 +13,6 @@ export default {
     },
   ],
   fields: [
-    orderRankField({ type: 'btsSection' }),
     {
       name: 'title',
       title: 'Tiêu đề',
