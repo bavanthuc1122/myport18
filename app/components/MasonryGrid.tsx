@@ -2,13 +2,19 @@
 
 import Masonry from 'react-masonry-css'
 import ImageCard from '../components/ImageCard'
+import { urlFor } from '@/lib/sanity'
 
 interface MasonryGridProps {
   items: {
-    id: number;
-    src: string;
+    id?: number;
+    _id?: string;
+    src?: string;
+    imageSource?: string;
+    coverImage?: any;
+    imageUrl?: string;
     title: string;
     category: string;
+    behanceLink?: string;
   }[];
 }
 
@@ -23,17 +29,46 @@ export default function MasonryGrid({ items }: MasonryGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2">
-      {items.map((item) => (
-        <div key={item.id} className="mb-2">
-          <ImageCard
-            src={item.src}
-            alt={item.title}
-            title={item.title}
-            category={item.category}
-          />
-        </div>
-      ))}
-    </div>
+    <Masonry
+      breakpointCols={breakpointColumns}
+      className="my-masonry-grid"
+      columnClassName="my-masonry-grid_column"
+    >
+      {items.map((item) => {
+        // Xác định src cho hình ảnh
+        let imageSrc = '';
+
+        if (item.src) {
+          // Nếu có src trực tiếp (dữ liệu cũ)
+          imageSrc = item.src;
+        } else if (item.imageSource === 'upload' && item.coverImage) {
+          // Nếu là ảnh tải lên từ Sanity
+          imageSrc = urlFor(item.coverImage).width(400).height(600).url();
+        } else if (item.imageSource === 'url' && item.imageUrl) {
+          // Nếu là URL bên ngoài
+          imageSrc = item.imageUrl;
+        } else {
+          // Fallback
+          imageSrc = '/placeholder.svg?height=600&width=400';
+        }
+
+        // Xác định category
+        const category = typeof item.category === 'string'
+          ? item.category
+          : item.category?.title || 'Uncategorized';
+
+        return (
+          <div key={item._id || item.id || Math.random().toString()} className="mb-2">
+            <ImageCard
+              src={imageSrc}
+              alt={item.title}
+              title={item.title}
+              category={category}
+              behanceLink={item.behanceLink}
+            />
+          </div>
+        );
+      })}
+    </Masonry>
   )
-} 
+}
