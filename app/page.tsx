@@ -61,10 +61,10 @@ export default async function Home() {
                     <div className="youtube-container">
                       <div className="preload-overlay"></div>
                       <iframe
-                        src={heroData.videoUrl.includes('youtube.com') ?
-                          `${heroData.videoUrl.replace('watch?v=', 'embed/')}?autoplay=1&mute=1&loop=1&playlist=${heroData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                          heroData.videoUrl.includes('youtu.be') ?
-                            `${heroData.videoUrl.replace('youtu.be/', 'youtube.com/embed/')}?autoplay=1&mute=1&loop=1&playlist=${heroData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                        src={heroData.videoUrl && heroData.videoUrl.includes('youtube.com') ?
+                          `https://www.youtube.com/embed/${heroData.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${heroData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                          heroData.videoUrl && heroData.videoUrl.includes('youtu.be') ?
+                            `https://www.youtube.com/embed/${heroData.videoUrl.split('youtu.be/')[1]}?autoplay=1&mute=1&loop=1&playlist=${heroData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
                             heroData.videoUrl
                         }
                         title={heroData.title || 'Hero video'}
@@ -137,10 +137,10 @@ export default async function Home() {
                 <div className="youtube-container">
                   <div className="preload-overlay"></div>
                   <iframe
-                    src={portfolioData.videoUrl.includes('youtube.com') ?
-                      `${portfolioData.videoUrl.replace('watch?v=', 'embed/')}?autoplay=1&mute=1&loop=1&playlist=${portfolioData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                      portfolioData.videoUrl.includes('youtu.be') ?
-                        `${portfolioData.videoUrl.replace('youtu.be/', 'youtube.com/embed/')}?autoplay=1&mute=1&loop=1&playlist=${portfolioData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                    src={portfolioData.videoUrl && portfolioData.videoUrl.includes('youtube.com') ?
+                      `https://www.youtube.com/embed/${portfolioData.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${portfolioData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                      portfolioData.videoUrl && portfolioData.videoUrl.includes('youtu.be') ?
+                        `https://www.youtube.com/embed/${portfolioData.videoUrl.split('youtu.be/')[1]}?autoplay=1&mute=1&loop=1&playlist=${portfolioData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
                         portfolioData.videoUrl
                     }
                     title="Background video"

@@ -1,3 +1,6 @@
+import {orderRankField} from '@sanity/orderable-document-list'
+
+// Schema cho phần hậu trường
 export default {
   name: 'btsSection',
   title: 'Hậu Trường',
@@ -13,6 +16,7 @@ export default {
     },
   ],
   fields: [
+    orderRankField({type: 'btsSection'}),
     {
       name: 'title',
       title: 'Tiêu đề',
@@ -42,9 +46,10 @@ export default {
       options: {
         list: [
           { title: 'Bố cục 1 (1 lớn + 4 nhỏ)', value: 'layout1' },
-          { title: 'Bố cục 2 (3 trái + 2 phải)', value: 'layout2' },
           { title: 'Bố cục 3 (5 hình ngang hàng)', value: 'layout3' },
-          { title: 'Bố cục 4 (2 lớn + 3 nhỏ)', value: 'layout4' },
+          { title: 'Bố cục 5 (Lưới hình ảnh tự động)', value: 'layout5' },
+          { title: 'Bố cục 6 (Slideshow)', value: 'layout6' },
+          { title: 'Bố cục 7 (Masonry - xếp chồng)', value: 'layout7' },
         ],
       },
       description: 'Chọn kiểu bố cục cho phần này',
@@ -102,6 +107,79 @@ export default {
       type: 'color',
       description: 'Màu nền cho phần này',
       group: 'content',
+    },
+    {
+      name: 'customLayout',
+      title: 'Tùy chỉnh bố cục',
+      type: 'object',
+      description: 'Các tùy chỉnh thêm cho bố cục',
+      group: 'content',
+      fields: [
+        {
+          name: 'columns',
+          title: 'Số cột',
+          type: 'number',
+          description: 'Số cột hiển thị trên màn hình lớn (mặc định: 3)',
+          initialValue: 3,
+          validation: Rule => Rule.min(1).max(6)
+        },
+        {
+          name: 'gap',
+          title: 'Khoảng cách',
+          type: 'number',
+          description: 'Khoảng cách giữa các hình ảnh (px)',
+          initialValue: 16,
+          validation: Rule => Rule.min(0).max(100)
+        },
+        {
+          name: 'roundedCorners',
+          title: 'Bo góc',
+          type: 'number',
+          description: 'Độ bo góc của hình ảnh (px)',
+          initialValue: 8,
+          validation: Rule => Rule.min(0).max(50)
+        },
+        {
+          name: 'shadow',
+          title: 'Bóng đổ',
+          type: 'boolean',
+          description: 'Thêm bóng đổ cho hình ảnh',
+          initialValue: true
+        },
+        {
+          name: 'hoverEffect',
+          title: 'Hiệu ứng hover',
+          type: 'string',
+          description: 'Hiệu ứng khi di chuột qua hình ảnh',
+          options: {
+            list: [
+              {title: 'Không có', value: 'none'},
+              {title: 'Phóng to', value: 'scale'},
+              {title: 'Mờ đục', value: 'opacity'},
+              {title: 'Xoay nhẹ', value: 'rotate'},
+              {title: 'Thay đổi màu sắc', value: 'color'}
+            ]
+          },
+          initialValue: 'scale'
+        },
+        {
+          name: 'aspectRatio',
+          title: 'Tỷ lệ khung hình',
+          type: 'string',
+          description: 'Tỷ lệ khung hình cho hình ảnh',
+          options: {
+            list: [
+              {title: 'Vuông (1:1)', value: '1:1'},
+              {title: 'Ngang (16:9)', value: '16:9'},
+              {title: 'Ngang (4:3)', value: '4:3'},
+              {title: 'Dọc (9:16)', value: '9:16'},
+              {title: 'Dọc (3:4)', value: '3:4'},
+              {title: 'Tự động', value: 'auto'}
+            ]
+          },
+          initialValue: '1:1'
+        }
+      ]
     },
   ],
   preview: {
