@@ -4,10 +4,6 @@ const nextConfig = {
   images: {
     domains: ['cdn.sanity.io'],
   },
-  // Cấu hình ISR
-  experimental: {
-    // Các cấu hình thử nghiệm hợp lệ
-  },
 };
 
 module.exports = nextConfig;
