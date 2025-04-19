@@ -6,8 +6,7 @@ const nextConfig = {
   },
   // Cấu hình ISR
   experimental: {
-    // Cho phép sử dụng res.revalidate() trong API routes
-    runtime: 'nodejs',
+    // Các cấu hình thử nghiệm hợp lệ
   },
 };
 

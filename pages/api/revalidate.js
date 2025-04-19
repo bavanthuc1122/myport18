@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   // Xác thực webhook từ Sanity
   const signature = req.headers[SIGNATURE_HEADER_NAME];
   const body = await readBody(req); // Đọc body dưới dạng text
-  
+
   if (!isValidSignature(body, signature, secret)) {
     return res.status(401).json({ message: 'Invalid signature' });
   }
@@ -20,10 +20,10 @@ export default async function handler(req, res) {
   try {
     const jsonBody = JSON.parse(body);
     const { _type, _id } = jsonBody;
-    
+
     // Xác định trang nào cần được cập nhật dựa trên loại nội dung
     let pagesToRevalidate = [];
-    
+
     // Xác định các trang cần cập nhật dựa trên loại nội dung thay đổi
     switch (_type) {
       case 'portfolioItem':
@@ -49,20 +49,21 @@ export default async function handler(req, res) {
         // Mặc định cập nhật trang chủ
         pagesToRevalidate = ['/'];
     }
-    
+
     // Thực hiện cập nhật cho từng trang
-    const revalidateResults = await Promise.all(
-      pagesToRevalidate.map(async (path) => {
-        try {
-          await res.revalidate(path);
-          return { path, success: true };
-        } catch (error) {
-          return { path, success: false, error: error.message };
-        }
-      })
-    );
-    
-    return res.status(200).json({ 
+    const revalidateResults = [];
+
+    for (const path of pagesToRevalidate) {
+      try {
+        await res.revalidate(path);
+        revalidateResults.push({ path, success: true });
+      } catch (error) {
+        console.error(`Error revalidating ${path}:`, error);
+        revalidateResults.push({ path, success: false, error: error.message });
+      }
+    }
+
+    return res.status(200).json({
       message: 'Revalidation triggered successfully',
       revalidated: revalidateResults,
       type: _type,
@@ -70,9 +71,9 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('Error revalidating pages:', error);
-    return res.status(500).json({ 
-      message: 'Error revalidating pages', 
-      error: error.message 
+    return res.status(500).json({
+      message: 'Error revalidating pages',
+      error: error.message
     });
   }
 }

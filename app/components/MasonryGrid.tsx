@@ -13,7 +13,7 @@ interface MasonryGridProps {
     coverImage?: any;
     imageUrl?: string;
     title: string;
-    category: string;
+    category?: string | { title?: string; _ref?: string; };
     behanceLink?: string;
   }[];
 }
