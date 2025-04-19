@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: ['cdn.sanity.io'],
   },
+  // Không có cấu hình experimental
 };
 
 module.exports = nextConfig;
