@@ -51,9 +51,9 @@ export default async function Contact() {
                   <div className="flex gap-4">
                     {contactInfo?.socialLinks ? (
                       // Render social links from Sanity
-                      contactInfo.socialLinks.map((link) => {
+                      contactInfo.socialLinks.map((link: { _key: string; platform?: string; url?: string }) => {
                         // Determine which icon to show based on platform
-                        let icon = null;
+                        let icon: React.ReactNode = null;
 
                         if (link.platform === 'instagram') {
                           icon = (
