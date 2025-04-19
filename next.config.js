@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: ['cdn.sanity.io'],
   },
+  swcMinify: true,
   // Không có cấu hình experimental
 };
 
