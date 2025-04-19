@@ -8,10 +8,10 @@ export default async function Contact() {
   // Batch fetch contact info from Sanity
   const data = await batchFetchSanityData({
     contactInfo: { query: '*[_type == "contactInfo"][0]' }
-  })
+  }) || {}
 
-  // Extract data from batch response
-  const contactInfo = data.contactInfo
+  // Extract data from batch response with fallback
+  const contactInfo = data.contactInfo || {}
   return (
     <div className="min-h-screen flex flex-col bg-[#000000] text-white">
       {/* Background pattern */}
