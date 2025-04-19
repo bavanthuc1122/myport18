@@ -1,11 +1,32 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 
 export default function SectionSlideshow({ images }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const validImages = images?.filter(img => img && img.url) || [];
+
+  // Kiểm tra và lọc các hình ảnh hợp lệ
+  const validImages = images?.filter(img => {
+    if (!img) return false;
+
+    // Kiểm tra xem hình ảnh có URL hay không
+    if (img.url) return true;
+
+    // Nếu không có URL trực tiếp, kiểm tra xem có asset hay không
+    if (img.asset || (img.image && img.image.asset)) {
+      console.log('Image with asset but no URL in section slideshow:', img);
+      return true; // Chấp nhận hình ảnh có asset nhưng không có URL
+    }
+
+    console.warn('Invalid image in section slideshow:', img);
+    return false;
+  }) || [];
+
+  // Ghi log số lượng hình ảnh hợp lệ
+  console.log(`SectionSlideshow: Found ${validImages.length} valid images out of ${images?.length || 0}`);
+  if (validImages.length > 0) {
+    console.log('First valid image:', validImages[0]);
+  }
 
   // Tự động chuyển slide sau mỗi 5 giây
   useEffect(() => {
@@ -41,25 +62,49 @@ export default function SectionSlideshow({ images }) {
 
   return (
     <div className="slideshow-container relative aspect-[16/9] rounded-lg overflow-hidden bg-gray-900">
-      {validImages.map((img, i) => (
-        <div
-          key={`section-slide-${img._key || i}`}
-          className={`slideshow-slide absolute inset-0 transition-opacity duration-500 ${i === activeIndex ? 'opacity-100' : 'opacity-0'}`}
-        >
-          <Image
-            src={img.url}
-            alt={img?.alt || `Slideshow image ${i + 1}`}
-            fill
-            className="object-cover"
-          />
-        </div>
-      ))}
+      {validImages.map((img, i) => {
+        // Xử lý URL hình ảnh
+        let imageUrl = '';
+        if (img.url) {
+          // Nếu đã có URL
+          imageUrl = img.url;
+        } else if (img.asset) {
+          // Nếu có asset trực tiếp, sử dụng URL tạm thời
+          imageUrl = `https://cdn.sanity.io/images/8ucvng19/production/${img.asset._ref.replace('image-', '').replace(/(-[a-z]+)$/, '.$1').replace('-', '.')}`;
+        } else if (img.image && img.image.asset) {
+          // Nếu có asset trong trường image, sử dụng URL tạm thời
+          imageUrl = `https://cdn.sanity.io/images/8ucvng19/production/${img.image.asset._ref.replace('image-', '').replace(/(-[a-z]+)$/, '.$1').replace('-', '.')}`;
+        } else {
+          // Fallback
+          imageUrl = '/placeholder.svg?height=675&width=1200';
+        }
+
+        return (
+          <div
+            key={`section-slide-${img._key || i}`}
+            className={`slideshow-slide absolute inset-0 transition-opacity duration-500 ${i === activeIndex ? 'opacity-100' : 'opacity-0'}`}
+          >
+            {/* Sử dụng thẻ img thông thường thay vì component Image */}
+            <img
+              src={imageUrl}
+              alt={img?.alt || `Slideshow image ${i + 1}`}
+              className="w-full h-full object-cover"
+              style={{ display: i === activeIndex ? 'block' : 'none' }}
+              onLoad={() => console.log(`Section image ${i} loaded:`, imageUrl)}
+              onError={(e) => {
+                console.error(`Error loading section image ${i}:`, imageUrl);
+                e.target.src = '/placeholder.svg?height=675&width=1200';
+              }}
+            />
+          </div>
+        );
+      })}
 
       {/* Slideshow controls - chỉ hiển thị nếu có nhiều hơn 1 hình ảnh */}
       {validImages.length > 1 && (
         <>
           <div className="slideshow-controls absolute inset-0 flex items-center justify-between p-4">
-            <button 
+            <button
               className="slideshow-control bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
               onClick={prevSlide}
             >
@@ -67,7 +112,7 @@ export default function SectionSlideshow({ images }) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <button 
+            <button
               className="slideshow-control bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
               onClick={nextSlide}
             >

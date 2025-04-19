@@ -1,55 +1,33 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
-// Import slideshow components (client-side only)
-const BtsSlideshow = dynamic(() => import('@/components/bts-slideshow'), { ssr: false });
+// Import section slideshow component (client-side only)
 const SectionSlideshow = dynamic(() => import('@/components/section-slideshow'), { ssr: false });
 
 export default function ClientBtsWrapper({ btsSections }) {
-  const [activeLayout, setActiveLayout] = useState('grid'); // 'grid' or 'slideshow'
+
+  // Ghi log dữ liệu để kiểm tra
+  useEffect(() => {
+    if (btsSections && btsSections.length > 0) {
+      console.log('BTS Sections data:', btsSections);
+    } else {
+      console.warn('No BTS sections data available');
+    }
+  }, [btsSections]);
 
   return (
     <div>
-      {/* Layout switcher */}
-      <div className="flex justify-center mb-8 gap-4">
-        <button
-          onClick={() => setActiveLayout('grid')}
-          className={`px-4 py-2 rounded-full transition-all ${activeLayout === 'grid'
-            ? 'bg-white text-black font-medium'
-            : 'bg-gray-800 text-gray-300'}`}
-        >
-          Hiển thị lưới
-        </button>
-        <button
-          onClick={() => setActiveLayout('slideshow')}
-          className={`px-4 py-2 rounded-full transition-all ${activeLayout === 'slideshow'
-            ? 'bg-white text-black font-medium'
-            : 'bg-gray-800 text-gray-300'}`}
-        >
-          Slideshow
-        </button>
-      </div>
-
-      {/* Content based on active layout */}
-      {activeLayout === 'slideshow' ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <BtsSlideshow btsSections={btsSections} />
-        </motion.div>
-      ) : (
-        <motion.div
-          className="grid-layout"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
+      {/* Content */}
+      <motion.div
+        className="grid-layout"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
           {btsSections && btsSections.length > 0 ? (
             // Render BTS sections from Sanity
             <>
@@ -399,7 +377,6 @@ export default function ClientBtsWrapper({ btsSections }) {
             </div>
           )}
         </motion.div>
-      )}
     </div>
   );
 }

@@ -19,6 +19,7 @@ type BtsImage = {
   _type?: string;
   asset?: any;
   alt?: string;
+  image?: any; // Thêm trường image để hỗ trợ cấu trúc dữ liệu từ Sanity
 }
 
 type BtsSection = {
@@ -44,9 +45,12 @@ export default async function BTS() {
   // Batch fetch BTS sections from Sanity to reduce API requests
   const data = await batchFetchSanityData({
     btsSections: {
-      query: '*[_type == "btsSection"] | order(orderRank asc) { _id, title, subtitle, layout, backgroundColor, mainImage, videoUrl, images, customLayout }'
+      query: '*[_type == "btsSection"] | order(orderRank asc) { _id, title, subtitle, layout, backgroundColor, mainImage, videoUrl, images[], customLayout }'
     }
   }) as { btsSections: BtsSection[] }
+
+  // Ghi log dữ liệu để kiểm tra
+  console.log('Raw BTS data from Sanity:', JSON.stringify(data.btsSections[0]?.images?.slice(0, 1) || [], null, 2));
 
   // Debug log
   console.log('BTS Sections data:', JSON.stringify(data.btsSections, null, 2))
@@ -84,14 +88,22 @@ export default async function BTS() {
               processedImages = section.images.map((img, index) => {
                 try {
                   // Kiểm tra xem img có hợp lệ không
-                  if (!img || (!img.asset && !img._type)) {
-                    console.warn('Invalid image object:', img);
+                  if (!img) {
+                    console.warn('Invalid image object (null or undefined)');
+                    return null;
+                  }
+
+                  // Xử lý cả trường hợp img là object image trực tiếp hoặc có trường image bên trong
+                  const imageToProcess = img.asset ? img : (img.image || img);
+
+                  if (!imageToProcess || (!imageToProcess.asset && !imageToProcess._type)) {
+                    console.warn('Invalid image structure:', img);
                     return null;
                   }
 
                   return {
                     _key: img._key || `img-${index}`,
-                    url: urlFor(img).url(),
+                    url: urlFor(imageToProcess).url(),
                     alt: img.alt || `Image ${index + 1}`
                   };
                 } catch (error) {
@@ -104,7 +116,11 @@ export default async function BTS() {
             // Xử lý hình ảnh chính
             let mainImageUrl = null;
             try {
-              mainImageUrl = section.mainImage ? urlFor(section.mainImage).url() : null;
+              if (section.mainImage) {
+                // Xử lý cả trường hợp mainImage là object image trực tiếp hoặc có trường image bên trong
+                const imageToProcess = section.mainImage.asset ? section.mainImage : (section.mainImage.image || section.mainImage);
+                mainImageUrl = imageToProcess ? urlFor(imageToProcess).url() : null;
+              }
             } catch (error) {
               console.error('Error processing main image:', error, section.mainImage);
             }
