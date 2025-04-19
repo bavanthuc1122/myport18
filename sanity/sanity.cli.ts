@@ -1,4 +1,8 @@
-import {defineCliConfig} from 'sanity/cli'
+// @ts-ignore
+type CliConfig = any
+
+// Mock defineCliConfig function
+const defineCliConfig = (config: CliConfig) => config
 
 export default defineCliConfig({
   api: {
