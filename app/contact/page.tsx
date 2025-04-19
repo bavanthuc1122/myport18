@@ -6,12 +6,12 @@ import { batchFetchSanityData, urlFor } from "@/lib/sanity"
 
 export default async function Contact() {
   // Batch fetch contact info from Sanity
-  const data = await batchFetchSanityData({
+  const data: { contactInfo?: any } = await batchFetchSanityData({
     contactInfo: { query: '*[_type == "contactInfo"][0]' }
-  })
+  }) || {}
 
-  // Extract data from batch response
-  const contactInfo = data.contactInfo
+  // Extract data from batch response with explicit type
+  const contactInfo = data?.contactInfo || {}
   return (
     <div className="min-h-screen flex flex-col bg-[#000000] text-white">
       {/* Background pattern */}
@@ -51,9 +51,9 @@ export default async function Contact() {
                   <div className="flex gap-4">
                     {contactInfo?.socialLinks ? (
                       // Render social links from Sanity
-                      contactInfo.socialLinks.map((link) => {
+                      contactInfo.socialLinks.map((link: { _key: string; platform?: string; url?: string }) => {
                         // Determine which icon to show based on platform
-                        let icon = null;
+                        let icon: React.ReactNode = null;
 
                         if (link.platform === 'instagram') {
                           icon = (
