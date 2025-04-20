@@ -53,9 +53,12 @@ export default function MasonryGrid({ items }: MasonryGridProps) {
         }
 
         // Xác định category
-        const category = typeof item.category === 'string'
-          ? item.category
-          : item.category?.title || 'Uncategorized';
+        let category = 'Uncategorized';
+        if (typeof item.category === 'string') {
+          category = item.category;
+        } else if (item.category && typeof item.category === 'object') {
+          category = (item.category as { title?: string }).title || 'Uncategorized';
+        }
 
         return (
           <div key={item._id || item.id || Math.random().toString()} className="mb-2">

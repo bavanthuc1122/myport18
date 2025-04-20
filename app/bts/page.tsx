@@ -114,7 +114,7 @@ export default async function BTS() {
             }
 
             // Xử lý hình ảnh chính
-            let mainImageUrl = null;
+            let mainImageUrl: string | null = null;
             try {
               if (section.mainImage) {
                 // Xử lý cả trường hợp mainImage là object image trực tiếp hoặc có trường image bên trong

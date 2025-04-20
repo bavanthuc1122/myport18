@@ -1,4 +1,5 @@
-import {StructureBuilder} from 'sanity/desk'
+// @ts-ignore
+type StructureBuilder = any
 
 export const myStructure = (S: StructureBuilder) =>
   S.list()
