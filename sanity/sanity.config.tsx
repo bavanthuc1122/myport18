@@ -19,6 +19,10 @@ export default defineConfig({
   projectId: '8ucvng19',
   dataset: 'production',
 
+  // Cấu hình cho subdomain
+  basePath: '/',
+  baseUrl: process.env.NODE_ENV === 'production' ? 'https://admin.bavanthuc.com' : 'http://localhost:3335',
+
   plugins: [
     structureTool({
       structure: myStructure

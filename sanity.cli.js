@@ -11,7 +11,14 @@ export default defineCliConfig({
     dataset: 'production'
   },
   cors: {
-    allowOrigins: ['https://myport18.vercel.app', 'http://localhost:3000'],
+    allowOrigins: [
+      'https://myport18.vercel.app',
+      'http://localhost:3000',
+      'https://bavanthuc.com',
+      'https://www.bavanthuc.com',
+      'https://admin.bavanthuc.com',
+      'http://localhost:3335'
+    ],
     allowCredentials: true,
     allowHeaders: ['Authorization', 'Content-Type'],
     maxAge: 600
