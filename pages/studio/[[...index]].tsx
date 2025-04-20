@@ -1,26 +1,23 @@
-import { NextStudio } from 'next-sanity/studio';
-import config from '../../sanity/sanity.config';
+import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { studioConfig } from './studio-config';
 
-// Thêm metadata cho trang
-export const metadata = {
-  title: 'Sanity Studio',
-  description: 'Admin dashboard for content management',
-};
+// Sử dụng dynamic import để tránh SSR
+const StudioComponent = dynamic(
+  () => import('next-sanity/studio').then((module) => module.NextStudio),
+  { ssr: false }
+);
 
 // Thêm cấu hình cho trang Studio
 const StudioPage: NextPage = () => {
-  // Sử dụng client-side rendering để tránh lỗi hydration
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null;
-
-  return <NextStudio config={config} />;
+  return (
+    <StudioComponent
+      config={studioConfig}
+    />
+  );
 };
+
+// Tắt SSR cho trang này
+export const getServerSideProps = () => ({ props: {} });
 
 export default StudioPage;
