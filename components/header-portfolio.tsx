@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, Menu } from "lucide-react"
+import { Menu } from "lucide-react"
 import { useState } from "react"
 
 export default function HeaderPortfolio() {
@@ -10,16 +10,16 @@ export default function HeaderPortfolio() {
   return (
     <div className="w-full fixed top-0 left-0 z-50">
       <div className="container mx-auto">
-        <header className="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8 mt-[3px]">
+        <header className="flex justify-center items-center h-16 px-4 sm:px-6 lg:px-8 mt-[3px] relative">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 absolute left-4 sm:left-6 lg:left-8">
             <div className="w-7 h-7 md:w-8 md:h-8 relative">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                 <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2" />
                 <circle cx="12" cy="12" r="5" stroke="white" strokeWidth="2" />
               </svg>
             </div>
-            <span className="text-base md:text-lg font-medium">Krenza</span>
+            <span className="text-base md:text-lg font-medium">VanThuc</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -54,18 +54,14 @@ export default function HeaderPortfolio() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <button 
+          <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2"
+            className="md:hidden p-2 absolute right-4 sm:right-6 lg:right-8"
           >
             <Menu className="w-5 h-5" />
           </button>
 
-          {/* Book Call Button */}
-          <button className="hidden md:flex items-center gap-1.5 bg-white text-black rounded-full px-3 py-1 text-sm hover:bg-gray-200 transition-colors">
-            <span>Book a Call</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+
         </header>
       </div>
 
@@ -97,14 +93,7 @@ export default function HeaderPortfolio() {
                 </li>
               </ul>
             </nav>
-            <button 
-              className="mt-8 flex items-center gap-1.5 bg-white text-black rounded-full px-3 py-1 text-sm hover:bg-gray-200 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <span>Book a Call</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-            <button 
+            <button
               className="absolute top-4 right-4 text-white p-2"
               onClick={() => setIsMenuOpen(false)}
             >
@@ -115,4 +104,4 @@ export default function HeaderPortfolio() {
       )}
     </div>
   )
-} 
+}
