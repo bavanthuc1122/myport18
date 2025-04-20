@@ -104,16 +104,13 @@ export default defineConfig({
   studio: {
     components: {
       logo: () => {
+        // Sử dụng URL tuyệt đối thay vì đường dẫn tương đối
         return (
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem' }}>
             <img
-              src="/logo.png"
+              src="https://via.placeholder.com/32"
               alt="Logo"
               style={{ height: '2rem' }}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = 'https://via.placeholder.com/32';
-              }}
             />
             <span style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>Portfolio Của Tôi</span>
           </div>
