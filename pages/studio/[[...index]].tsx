@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
-import { studioConfig } from './studio-config';
+import { studioConfig } from '../../lib/studio/studio-config';
 
 // Sử dụng dynamic import để tránh SSR
 const StudioComponent = dynamic(
