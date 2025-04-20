@@ -19,7 +19,16 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Không có cấu hình experimental
+  // Cấu hình cho Sanity Studio
+  transpilePackages: ['next-sanity'],
+  // Cấu hình webpack để xử lý các modules của Sanity
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Không bundle các modules của Sanity trong client-side
+      config.externals = [...(config.externals || []), 'canvas', 'bufferutil', 'utf-8-validate'];
+    }
+    return config;
+  }
 };
 
 module.exports = nextConfig;
