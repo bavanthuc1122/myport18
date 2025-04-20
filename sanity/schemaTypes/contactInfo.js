@@ -2,6 +2,8 @@ export default {
   name: 'contactInfo',
   title: 'Thông Tin Liên Hệ',
   type: 'document',
+  __experimental_actions: ['update', 'publish'],  // Chỉ cho phép cập nhật, không cho phép tạo mới hoặc xóa
+  liveEdit: true,  // Tự động lưu khi chỉnh sửa
   groups: [
     {
       name: 'basic',

@@ -10,27 +10,42 @@ export default async function Home() {
   // Fetch data using batch request to reduce API calls
   const { batchFetchSanityData } = await import('@/lib/sanity');
 
-  // Batch fetch data
+  // Batch fetch data - using singleton documents
   const data = await batchFetchSanityData({
     heroData: {
-      query: `*[_type == "heroSection"][0]`
+      query: `*[_type == "heroSection" && _id == "heroSection"][0]`
     },
     portfolioData: {
-      query: `*[_type == "portfolioPreview"][0]`
+      query: `*[_type == "portfolioPreview" && _id == "portfolioPreview"][0] {
+        ...,
+        "previewImagesWithAssets": previewImages[] {
+          ...,
+          "imageAsset": image.asset->
+        }
+      }`
     },
     aboutData: {
-      query: `*[_type == "aboutSection"][0]`
+      query: `*[_type == "aboutSection" && _id == "aboutSection"][0]`
     }
   });
+
+  // Log hero data for debugging
+  console.log('Hero data ID:', data.heroData?._id);
 
   // Extract data from batch response
   const heroData = data.heroData;
   const portfolioData = data.portfolioData;
   const aboutData = data.aboutData;
 
-  // Debug logs
+  // Debug logs - Chi tiết hơn về dữ liệu
+  console.log('===== PORTFOLIO DATA DEBUG =====');
+  console.log('Portfolio data:', portfolioData);
   console.log('Portfolio data mediaType:', portfolioData?.mediaType);
   console.log('Portfolio data videoUrl:', portfolioData?.videoUrl);
+  console.log('Portfolio data portfolioLink:', portfolioData?.portfolioLink);
+  console.log('Portfolio data previewImages:', portfolioData?.previewImages);
+
+
   return (
     <div className="min-h-screen bg-[#000000] text-white">
       {/* Background pattern */}
@@ -159,8 +174,7 @@ export default async function Home() {
               ></div>
             )}
 
-            {/* Console log để debug */}
-            {console.log('Portfolio data:', portfolioData)}
+
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <h2 className="text-3xl lg:text-4xl text-center font-light mb-16">
@@ -178,80 +192,37 @@ export default async function Home() {
                 </div>
 
                 <div className="w-full lg:w-2/3 relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px]">
-                  {portfolioData?.previewImages && portfolioData.previewImages.length >= 3 ? (
-                    // Positions for the three images
-                    <>
-                      {/* Image 1 */}
-                      <Link
-                        href={portfolioData.previewImages[0]?.link || portfolioData.portfolioLink || '/portfolio'}
-                        className="absolute top-0 left-[10%] w-[35%] h-[85%] rounded-xl overflow-hidden transform -rotate-6 hover:scale-105 transition-transform"
-                      >
-                        <Image
-                          src={urlFor(portfolioData.previewImages[0].image).width(500).height(800).url()}
-                          alt={portfolioData.previewImages[0].alt || 'Portfolio image 1'}
-                          width={500}
-                          height={800}
-                          className="object-cover w-full h-full"
-                        />
-                      </Link>
-
-                      {/* Image 2 */}
-                      <Link
-                        href={portfolioData.previewImages[1]?.link || portfolioData.portfolioLink || '/portfolio'}
-                        className="absolute top-[10%] left-[35%] w-[35%] h-[85%] rounded-xl overflow-hidden transform rotate-3 z-10 hover:scale-105 transition-transform"
-                      >
-                        <Image
-                          src={urlFor(portfolioData.previewImages[1].image).width(500).height(800).url()}
-                          alt={portfolioData.previewImages[1].alt || 'Portfolio image 2'}
-                          width={500}
-                          height={800}
-                          className="object-cover w-full h-full"
-                        />
-                      </Link>
-
-                      {/* Image 3 */}
-                      <Link
-                        href={portfolioData.previewImages[2]?.link || portfolioData.portfolioLink || '/portfolio'}
-                        className="absolute top-[5%] right-[5%] w-[35%] h-[85%] rounded-xl overflow-hidden transform -rotate-3 hover:scale-105 transition-transform"
-                      >
-                        <Image
-                          src={urlFor(portfolioData.previewImages[2].image).width(500).height(800).url()}
-                          alt={portfolioData.previewImages[2].alt || 'Portfolio image 3'}
-                          width={500}
-                          height={800}
-                          className="object-cover w-full h-full"
-                        />
-                      </Link>
-                    </>
-                  ) : (
-                    // Fallback if no images in CMS
-                    <>
-                      <div className="absolute top-0 left-[10%] w-[35%] h-[85%] rounded-xl overflow-hidden transform -rotate-6 hover:scale-105 transition-transform">
-                        <Image
-                          src="/placeholder.svg?height=500&width=300"
-                          alt="Portfolio image 1"
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="absolute top-[10%] left-[35%] w-[35%] h-[85%] rounded-xl overflow-hidden transform rotate-3 z-10 hover:scale-105 transition-transform">
-                        <Image
-                          src="/placeholder.svg?height=500&width=300"
-                          alt="Portfolio image 2"
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="absolute top-[5%] right-[5%] w-[35%] h-[85%] rounded-xl overflow-hidden transform -rotate-3 hover:scale-105 transition-transform">
-                        <Image
-                          src="/placeholder.svg?height=500&width=300"
-                          alt="Portfolio image 3"
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    </>
-                  )}
+                  {/* Hiển thị ảnh từ CMS hoặc placeholder */}
+                  <Link href={portfolioData?.portfolioLink || '/portfolio'} className="absolute top-0 left-[10%] w-[35%] h-[85%] rounded-xl overflow-hidden transform -rotate-6 hover:scale-105 transition-transform">
+                    <Image
+                      src={portfolioData?.previewImages && portfolioData.previewImages[0]?.image ?
+                        urlFor(portfolioData.previewImages[0].image).width(500).height(800).url() :
+                        "/placeholder.svg?height=500&width=300"}
+                      alt={portfolioData?.previewImages?.[0]?.alt || "Portfolio image 1"}
+                      fill
+                      className="object-cover"
+                    />
+                  </Link>
+                  <Link href={portfolioData?.portfolioLink || '/portfolio'} className="absolute top-[10%] left-[35%] w-[35%] h-[85%] rounded-xl overflow-hidden transform rotate-3 z-10 hover:scale-105 transition-transform">
+                    <Image
+                      src={portfolioData?.previewImages && portfolioData.previewImages[1]?.image ?
+                        urlFor(portfolioData.previewImages[1].image).width(500).height(800).url() :
+                        "/placeholder.svg?height=500&width=300"}
+                      alt={portfolioData?.previewImages?.[1]?.alt || "Portfolio image 2"}
+                      fill
+                      className="object-cover"
+                    />
+                  </Link>
+                  <Link href={portfolioData?.portfolioLink || '/portfolio'} className="absolute top-[5%] right-[5%] w-[35%] h-[85%] rounded-xl overflow-hidden transform -rotate-3 hover:scale-105 transition-transform">
+                    <Image
+                      src={portfolioData?.previewImages && portfolioData.previewImages[2]?.image ?
+                        urlFor(portfolioData.previewImages[2].image).width(500).height(800).url() :
+                        "/placeholder.svg?height=500&width=300"}
+                      alt={portfolioData?.previewImages?.[2]?.alt || "Portfolio image 3"}
+                      fill
+                      className="object-cover"
+                    />
+                  </Link>
                 </div>
               </div>
             </div>

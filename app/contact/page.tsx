@@ -7,7 +7,7 @@ import { batchFetchSanityData, urlFor } from "@/lib/sanity"
 export default async function Contact() {
   // Batch fetch contact info from Sanity
   const data: { contactInfo?: any } = await batchFetchSanityData({
-    contactInfo: { query: '*[_type == "contactInfo"][0]' }
+    contactInfo: { query: '*[_type == "contactInfo" && _id == "contactInfo"][0]' }
   }) || {}
 
   // Extract data from batch response with explicit type

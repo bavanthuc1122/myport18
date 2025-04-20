@@ -16,5 +16,7 @@ export default defineCliConfig({
   autoUpdates: true,
   server: {
     port: 3335
-  }
+  },
+  // Hostname for Sanity Studio deployment
+  studioHost: 'admin1122'
 })

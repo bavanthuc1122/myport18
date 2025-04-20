@@ -102,9 +102,6 @@ export default {
               type: 'image',
               options: {
                 hotspot: true,
-                storeOriginalFilename: true,
-                accept: 'image/*',
-                sources: ['local']
               },
             },
             {

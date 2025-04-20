@@ -7,20 +7,35 @@ export const myStructure = (S: StructureBuilder) =>
     .items([
       // Home Group
       S.listItem()
-        .title('Home Page')
+        .title('Các phần trang chủ')
         .child(
           S.list()
-            .title('Home Page Sections')
+            .title('Các phần trang chủ')
             .items([
+              // Hero Section
               S.listItem()
                 .title('Hero Section')
-                .child(S.documentTypeList('heroSection')),
+                .child(
+                  S.document()
+                    .documentId('heroSection')
+                    .schemaType('heroSection')
+                ),
+              // About Us Section
               S.listItem()
-                .title('About Us Section')
-                .child(S.documentTypeList('aboutSection')),
+                .title('About Section')
+                .child(
+                  S.document()
+                    .documentId('aboutSection')
+                    .schemaType('aboutSection')
+                ),
+              // Portfolio Preview
               S.listItem()
                 .title('Portfolio Preview')
-                .child(S.documentTypeList('portfolioPreview')),
+                .child(
+                  S.document()
+                    .documentId('portfolioPreview')
+                    .schemaType('portfolioPreview')
+                ),
             ])
         ),
 

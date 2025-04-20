@@ -20,7 +20,7 @@ export async function GET() {
         "backgroundImageUrl": backgroundImage.asset->url,
         "previewImagesUrls": previewImages[]{..., "imageUrl": image.asset->url}
       },
-      "contactInfo": *[_type == "contactInfo"][0] {
+      "contactInfo": *[_type == "contactInfo" && _id == "contactInfo"][0] {
         ...,
         "contactImageUrl": contactImage.asset->url
       },
