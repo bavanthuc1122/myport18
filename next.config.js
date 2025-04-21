@@ -3,6 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   // Tắt tính năng trace để tránh lỗi EPERM
   output: 'standalone',
+  // Cấu hình SWC
+  swcMinify: true,
+  experimental: {
+    forceSwcTransforms: true,
+  },
   images: {
     remotePatterns: [
       {
