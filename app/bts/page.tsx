@@ -75,8 +75,6 @@ export default async function BTS() {
           {/* Title section */}
           <div className="mb-16 text-center fade-in">
             <h1 className="text-4xl lg:text-6xl font-light mb-3 slide-up">Be High The Scene</h1>
-            <p className="text-gray-400 text-lg slide-up delay-200 italic">A closer perspective</p>
-            <div className="w-24 h-1 bg-white/20 mx-auto mt-6"></div>
           </div>
 
           {/* Sử dụng client component wrapper để xử lý layout */}

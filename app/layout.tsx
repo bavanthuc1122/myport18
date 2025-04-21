@@ -3,13 +3,14 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import "./animations.css"
+import "./locomotive-scroll.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "VThuc Photography",
   description: "Professional photography portfolio",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#1a1a1a] text-white min-h-screen flex flex-col`}>
-        <main className="flex-1">{children}</main>
+        {children}
       </body>
     </html>
   )

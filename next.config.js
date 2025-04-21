@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Tắt tính năng trace để tránh lỗi EPERM
+  experimental: {
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/**',
+        '.next/**',
+      ],
+    },
+  },
   images: {
-    domains: ['cdn.sanity.io'],
     remotePatterns: [
       {
         protocol: 'https',

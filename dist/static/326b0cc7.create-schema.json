@@ -1,0 +1,1080 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "slug"
+      }
+    ],
+    "name": "media.tag",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "h",
+        "type": "number",
+        "title": "Hue"
+      },
+      {
+        "name": "s",
+        "type": "number",
+        "title": "Saturation"
+      },
+      {
+        "name": "l",
+        "type": "number",
+        "title": "Lightness"
+      },
+      {
+        "name": "a",
+        "type": "number",
+        "title": "Alpha"
+      }
+    ],
+    "name": "hslaColor",
+    "type": "object",
+    "title": "Hue Saturation Lightness"
+  },
+  {
+    "fields": [
+      {
+        "name": "h",
+        "type": "number",
+        "title": "Hue"
+      },
+      {
+        "name": "s",
+        "type": "number",
+        "title": "Saturation"
+      },
+      {
+        "name": "v",
+        "type": "number",
+        "title": "Value"
+      },
+      {
+        "name": "a",
+        "type": "number",
+        "title": "Alpha"
+      }
+    ],
+    "name": "hsvaColor",
+    "type": "object",
+    "title": "Hue Saturation Value"
+  },
+  {
+    "fields": [
+      {
+        "name": "r",
+        "type": "number",
+        "title": "Red"
+      },
+      {
+        "name": "g",
+        "type": "number",
+        "title": "Green"
+      },
+      {
+        "name": "b",
+        "type": "number",
+        "title": "Blue"
+      },
+      {
+        "name": "a",
+        "type": "number",
+        "title": "Alpha"
+      }
+    ],
+    "name": "rgbaColor",
+    "type": "object",
+    "title": "Red Green Blue (rgb)"
+  },
+  {
+    "fields": [
+      {
+        "name": "hex",
+        "type": "string"
+      },
+      {
+        "name": "alpha",
+        "type": "number"
+      },
+      {
+        "name": "hsl",
+        "type": "hslaColor",
+        "title": "Hue Saturation Lightness"
+      },
+      {
+        "name": "hsv",
+        "type": "hsvaColor",
+        "title": "Hue Saturation Value"
+      },
+      {
+        "name": "rgb",
+        "type": "rgbaColor",
+        "title": "Red Green Blue (rgb)"
+      }
+    ],
+    "name": "color",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "description": "The main title displayed in the hero section",
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "description": "Optional subtitle displayed below the title",
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Image",
+              "value": "image"
+            },
+            {
+              "title": "Video",
+              "value": "video"
+            }
+          ]
+        },
+        "description": "Choose whether to display an image or video in the background",
+        "name": "mediaType",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "The background image (used when Media Type is set to Image)",
+        "hidden": "conditional",
+        "name": "backgroundImage",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Dán URL video YouTube (dạng https://www.youtube.com/watch?v=XXXX hoặc https://youtu.be/XXXX). Video sẽ tự động phát, tắt tiếng, lặp lại và ẩn logo YouTube. Video sẽ được phóng to để lấp đầy màn hình.",
+        "hidden": "conditional",
+        "name": "videoUrl",
+        "type": "url",
+        "title": "URL Video YouTube"
+      },
+      {
+        "options": {
+          "accept": "video/*"
+        },
+        "description": "Upload a video file directly (used when Media Type is set to Video)",
+        "hidden": "conditional",
+        "name": "videoFile",
+        "type": "file"
+      }
+    ],
+    "name": "heroSection",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "Tiêu đề chính cho phần portfolio preview",
+        "name": "title",
+        "type": "string",
+        "title": "Tiêu đề chính"
+      },
+      {
+        "description": "Dòng tiêu đề phụ thứ nhất (ví dụ: \"I tell your story\")",
+        "name": "subtitle1",
+        "type": "string",
+        "title": "Tiêu đề phụ 1"
+      },
+      {
+        "description": "Dòng tiêu đề phụ thứ hai (ví dụ: \"in pictures\")",
+        "name": "subtitle2",
+        "type": "string",
+        "title": "Tiêu đề phụ 2"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Hình ảnh",
+              "value": "image"
+            },
+            {
+              "title": "Video",
+              "value": "video"
+            },
+            {
+              "title": "Màu đơn",
+              "value": "color"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "color",
+        "name": "mediaType",
+        "type": "string",
+        "title": "Loại nền"
+      },
+      {
+        "description": "Chọn màu nền",
+        "name": "backgroundColor",
+        "type": "color",
+        "title": "Màu nền"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Hình ảnh nền cho phần Portfolio Preview",
+        "hidden": "conditional",
+        "name": "backgroundImage",
+        "type": "image",
+        "title": "Hình ảnh nền"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Dán URL video YouTube (dạng https://www.youtube.com/watch?v=XXXX hoặc https://youtu.be/XXXX). Video sẽ tự động phát, tắt tiếng, lặp lại và ẩn logo YouTube. Video sẽ được phóng to để lấp đầy màn hình.",
+        "hidden": "conditional",
+        "name": "videoUrl",
+        "type": "url",
+        "title": "URL Video YouTube"
+      },
+      {
+        "options": {
+          "layout": "grid"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 3
+              }
+            ],
+            "level": "error",
+            "message": "Chỉ được thêm tối đa 3 hình ảnh xem trước"
+          }
+        ],
+        "description": "Thêm tối đa 3 hình ảnh để hiển thị trong phần xem trước portfolio",
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Hình ảnh"
+              },
+              {
+                "description": "Văn bản thay thế khi hình ảnh không tải được",
+                "name": "alt",
+                "type": "string",
+                "title": "Mô tả hình ảnh"
+              },
+              {
+                "description": "URL khi người dùng nhấp vào hình ảnh này",
+                "name": "link",
+                "type": "string",
+                "title": "Đường dẫn liên kết"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "previewImages",
+        "type": "array",
+        "title": "Hình ảnh xem trước"
+      },
+      {
+        "initialValue": "/portfolio",
+        "description": "URL đến trang portfolio (mặc định: /portfolio)",
+        "name": "portfolioLink",
+        "type": "string",
+        "title": "Đường dẫn Portfolio"
+      }
+    ],
+    "name": "portfolioPreview",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "description": "Tiêu đề chính của phần giới thiệu (ví dụ: \"About Me\")",
+        "name": "title",
+        "type": "string",
+        "title": "Tiêu đề chính"
+      },
+      {
+        "rows": 3,
+        "description": "Mô tả ngắn về bạn hoặc công việc của bạn",
+        "name": "description",
+        "type": "text",
+        "title": "Mô tả"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Hình ảnh",
+              "value": "image"
+            },
+            {
+              "title": "Video",
+              "value": "video"
+            },
+            {
+              "title": "Màu đơn",
+              "value": "color"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "color",
+        "name": "mediaType",
+        "type": "string",
+        "title": "Loại nền"
+      },
+      {
+        "description": "Chọn màu nền",
+        "name": "backgroundColor",
+        "type": "color",
+        "title": "Màu nền"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Hình ảnh nền cho phần About",
+        "hidden": "conditional",
+        "name": "backgroundImage",
+        "type": "image",
+        "title": "Hình ảnh nền"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Dán URL video YouTube (dạng https://www.youtube.com/watch?v=XXXX hoặc https://youtu.be/XXXX). Video sẽ tự động phát, tắt tiếng, lặp lại và ẩn logo YouTube.",
+        "hidden": "conditional",
+        "name": "videoUrl",
+        "type": "url",
+        "title": "URL Video YouTube"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Hình ảnh chân dung hoặc hình ảnh đại diện",
+        "name": "profileImage",
+        "type": "image",
+        "title": "Hình ảnh giới thiệu"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 6
+              }
+            ],
+            "level": "warning",
+            "message": "Tối đa 6 hình ảnh"
+          }
+        ],
+        "description": "Các hình ảnh hiển thị trong bộ sưu tập (tối đa 6 hình)",
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "galleryImages",
+        "type": "array",
+        "title": "Hình ảnh bộ sưu tập"
+      },
+      {
+        "initialValue": "SKILL COLLECTION",
+        "description": "Tiêu đề cho phần kỹ năng (ví dụ: \"SKILL COLLECTION\")",
+        "name": "skillsTitle",
+        "type": "string",
+        "title": "Tiêu đề kỹ năng"
+      },
+      {
+        "description": "Danh sách các kỹ năng nhiếp ảnh của bạn",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "skills",
+        "type": "array",
+        "title": "Danh sách kỹ năng"
+      },
+      {
+        "initialValue": "See >>",
+        "description": "Văn bản hiển thị trên nút (ví dụ: \"See >>\")",
+        "name": "buttonText",
+        "type": "string",
+        "title": "Văn bản nút"
+      },
+      {
+        "initialValue": "/portfolio",
+        "description": "Đường dẫn khi nhấp vào nút",
+        "name": "buttonLink",
+        "type": "string",
+        "title": "Đường dẫn nút"
+      }
+    ],
+    "name": "aboutSection",
+    "type": "document",
+    "title": "Phần Giới Thiệu"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Tên của danh mục",
+        "name": "title",
+        "type": "string",
+        "title": "Tên danh mục"
+      },
+      {
+        "description": "Mô tả tùy chọn của danh mục",
+        "name": "description",
+        "type": "text",
+        "title": "Mô tả"
+      }
+    ],
+    "name": "category",
+    "type": "document",
+    "title": "Danh Mục Portfolio"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Tên của dự án portfolio",
+        "name": "title",
+        "type": "string",
+        "title": "Tên dự án"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Tải lên hình ảnh",
+              "value": "upload"
+            },
+            {
+              "title": "Đường dẫn bên ngoài",
+              "value": "url"
+            }
+          ]
+        },
+        "initialValue": "upload",
+        "description": "Chọn cách tải lên hình ảnh hoặc sử dụng URL bên ngoài",
+        "name": "imageSource",
+        "type": "string",
+        "title": "Nguồn hình ảnh"
+      },
+      {
+        "options": {
+          "hotspot": true,
+          "accept": "image/*"
+        },
+        "description": "Hình ảnh chính cho dự án portfolio này",
+        "hidden": "conditional",
+        "name": "coverImage",
+        "type": "image",
+        "title": "Ảnh bìa"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "URL đến hình ảnh bên ngoài",
+        "hidden": "conditional",
+        "name": "imageUrl",
+        "type": "url",
+        "title": "URL hình ảnh"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Liên kết đến dự án hoặc album Behance",
+        "name": "behanceLink",
+        "type": "url",
+        "title": "Liên kết Behance"
+      },
+      {
+        "description": "Danh mục mà dự án portfolio này thuộc về",
+        "to": [
+          {
+            "type": "category"
+          }
+        ],
+        "name": "category",
+        "type": "reference",
+        "title": "Danh mục"
+      },
+      {
+        "description": "Ngày xuất bản dự án này",
+        "name": "publishedAt",
+        "type": "datetime",
+        "title": "Ngày xuất bản"
+      },
+      {
+        "description": "Màu nền cho trang chi tiết dự án",
+        "name": "backgroundColor",
+        "type": "color",
+        "title": "Màu nền"
+      }
+    ],
+    "name": "portfolioItem",
+    "type": "document",
+    "title": "Các Dự Án Portfolio"
+  },
+  {
+    "fields": [
+      {
+        "readOnly": true,
+        "hidden": true,
+        "name": "orderRank",
+        "type": "string"
+      },
+      {
+        "description": "Tiêu đề của phần hậu trường này",
+        "name": "title",
+        "type": "string",
+        "title": "Tiêu đề"
+      },
+      {
+        "description": "Phụ đề tùy chọn cho phần này",
+        "name": "subtitle",
+        "type": "string",
+        "title": "Phụ đề"
+      },
+      {
+        "initialValue": 0,
+        "description": "Thứ tự hiển thị của phần này (số nhỏ hơn hiển thị trước)",
+        "name": "order",
+        "type": "number",
+        "title": "Thứ tự hiển thị"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Bố cục 1 (1 lớn + 4 nhỏ)",
+              "value": "layout1"
+            },
+            {
+              "title": "Bố cục 3 (5 hình ngang hàng)",
+              "value": "layout3"
+            },
+            {
+              "title": "Bố cục 5 (Lưới hình ảnh tự động)",
+              "value": "layout5"
+            },
+            {
+              "title": "Bố cục 6 (Slideshow)",
+              "value": "layout6"
+            },
+            {
+              "title": "Bố cục 7 (Masonry - xếp chồng)",
+              "value": "layout7"
+            }
+          ]
+        },
+        "description": "Chọn kiểu bố cục cho phần này",
+        "name": "layout",
+        "type": "string",
+        "title": "Kiểu bố cục"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Hình ảnh chính/nổi bật cho phần này (sử dụng trong Bố cục 1)",
+        "hidden": "conditional",
+        "name": "mainImage",
+        "type": "image",
+        "title": "Hình ảnh chính"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "URL đến video (YouTube, Vimeo, v.v.) - có thể sử dụng thay cho hình ảnh chính",
+        "hidden": "conditional",
+        "name": "videoUrl",
+        "type": "url",
+        "title": "URL Video"
+      },
+      {
+        "options": {
+          "layout": "grid"
+        },
+        "description": "Thêm hình ảnh cho phần hậu trường này (có thể chọn nhiều hình ảnh cùng lúc)",
+        "of": [
+          {
+            "options": {
+              "hotspot": true,
+              "accept": "image/*"
+            },
+            "fields": [
+              {
+                "description": "Văn bản thay thế cho hình ảnh (hỗ trợ SEO)",
+                "name": "alt",
+                "type": "string",
+                "title": "Mô tả hình ảnh"
+              }
+            ],
+            "type": "image"
+          }
+        ],
+        "name": "images",
+        "type": "array",
+        "title": "Hình ảnh"
+      },
+      {
+        "description": "Màu nền cho phần này",
+        "name": "backgroundColor",
+        "type": "color",
+        "title": "Màu nền"
+      },
+      {
+        "description": "Các tùy chỉnh thêm cho bố cục",
+        "fields": [
+          {
+            "initialValue": 3,
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "min",
+                    "constraint": 1
+                  },
+                  {
+                    "flag": "max",
+                    "constraint": 6
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Số cột hiển thị trên màn hình lớn (mặc định: 3)",
+            "name": "columns",
+            "type": "number",
+            "title": "Số cột"
+          },
+          {
+            "initialValue": 16,
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "min",
+                    "constraint": 0
+                  },
+                  {
+                    "flag": "max",
+                    "constraint": 100
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Khoảng cách giữa các hình ảnh (px)",
+            "name": "gap",
+            "type": "number",
+            "title": "Khoảng cách"
+          },
+          {
+            "initialValue": 8,
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "min",
+                    "constraint": 0
+                  },
+                  {
+                    "flag": "max",
+                    "constraint": 50
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "description": "Độ bo góc của hình ảnh (px)",
+            "name": "roundedCorners",
+            "type": "number",
+            "title": "Bo góc"
+          },
+          {
+            "initialValue": true,
+            "description": "Thêm bóng đổ cho hình ảnh",
+            "name": "shadow",
+            "type": "boolean",
+            "title": "Bóng đổ"
+          },
+          {
+            "options": {
+              "list": [
+                {
+                  "title": "Không có",
+                  "value": "none"
+                },
+                {
+                  "title": "Phóng to",
+                  "value": "scale"
+                },
+                {
+                  "title": "Mờ đục",
+                  "value": "opacity"
+                },
+                {
+                  "title": "Xoay nhẹ",
+                  "value": "rotate"
+                },
+                {
+                  "title": "Thay đổi màu sắc",
+                  "value": "color"
+                }
+              ]
+            },
+            "initialValue": "scale",
+            "description": "Hiệu ứng khi di chuột qua hình ảnh",
+            "name": "hoverEffect",
+            "type": "string",
+            "title": "Hiệu ứng hover"
+          },
+          {
+            "options": {
+              "list": [
+                {
+                  "title": "Vuông (1:1)",
+                  "value": "1:1"
+                },
+                {
+                  "title": "Ngang (16:9)",
+                  "value": "16:9"
+                },
+                {
+                  "title": "Ngang (4:3)",
+                  "value": "4:3"
+                },
+                {
+                  "title": "Dọc (9:16)",
+                  "value": "9:16"
+                },
+                {
+                  "title": "Dọc (3:4)",
+                  "value": "3:4"
+                },
+                {
+                  "title": "Tự động",
+                  "value": "auto"
+                }
+              ]
+            },
+            "initialValue": "1:1",
+            "description": "Tỷ lệ khung hình cho hình ảnh",
+            "name": "aspectRatio",
+            "type": "string",
+            "title": "Tỷ lệ khung hình"
+          }
+        ],
+        "name": "customLayout",
+        "type": "object",
+        "title": "Tùy chỉnh bố cục"
+      }
+    ],
+    "name": "btsSection",
+    "type": "document",
+    "title": "Hậu Trường"
+  },
+  {
+    "liveEdit": true,
+    "fields": [
+      {
+        "initialValue": "LIÊN HỆ",
+        "description": "Tiêu đề chính cho trang liên hệ",
+        "name": "title",
+        "type": "string",
+        "title": "Tiêu đề trang"
+      },
+      {
+        "initialValue": "Cho Nhiếp Ảnh",
+        "description": "Phụ đề cho trang liên hệ",
+        "name": "subtitle",
+        "type": "string",
+        "title": "Phụ đề"
+      },
+      {
+        "initialValue": "Thức ( Nhiếp ảnh gia )",
+        "description": "Tên của bạn hoặc tên doanh nghiệp",
+        "name": "photographerName",
+        "type": "string",
+        "title": "Tên nhiếp ảnh gia"
+      },
+      {
+        "initialValue": "thucnhthuc@gmail.com",
+        "description": "Địa chỉ email liên hệ của bạn",
+        "name": "email",
+        "type": "string",
+        "title": "Địa chỉ email"
+      },
+      {
+        "initialValue": "(+84) 0814019555",
+        "description": "Số điện thoại liên hệ của bạn",
+        "name": "phone",
+        "type": "string",
+        "title": "Số điện thoại"
+      },
+      {
+        "description": "Màu nền cho trang liên hệ",
+        "name": "backgroundColor",
+        "type": "color",
+        "title": "Màu nền"
+      },
+      {
+        "options": {
+          "hotspot": true,
+          "accept": "image/*"
+        },
+        "description": "Hình ảnh hiển thị trên trang liên hệ",
+        "name": "contactImage",
+        "type": "image",
+        "title": "Ảnh liên hệ"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Instagram",
+                      "value": "instagram"
+                    },
+                    {
+                      "title": "Facebook",
+                      "value": "facebook"
+                    },
+                    {
+                      "title": "Behance",
+                      "value": "behance"
+                    }
+                  ]
+                },
+                "name": "platform",
+                "type": "string",
+                "title": "Nền tảng"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^http$/",
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "Liên kết đến trang cá nhân của bạn trên nền tảng này",
+                "name": "url",
+                "type": "url",
+                "title": "Đường dẫn"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "socialLinks",
+        "type": "array",
+        "title": "Liên kết mạng xã hội"
+      }
+    ],
+    "name": "contactInfo",
+    "type": "document",
+    "title": "Thông Tin Liên Hệ"
+  }
+]

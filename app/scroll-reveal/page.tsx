@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import HomePage from './HomePage';
-import Loading from './loading';
+import Loading from '../loading';
+import ScrollRevealPage from './ScrollRevealPage';
 
 export const revalidate = 10; // Revalidate every 10 seconds
 
-export default async function Home() {
+export default async function SmoothScrollRevealPage() {
   // Fetch data using batch request to reduce API calls
   const { batchFetchSanityData } = await import('@/lib/sanity');
 
@@ -24,18 +24,6 @@ export default async function Home() {
     },
     aboutData: {
       query: `*[_type == "aboutSection" && _id == "aboutSection"][0]`
-    },
-    galleryData: {
-      query: `*[_type == "galleryHighlights" && _id == "galleryHighlights"][0] {
-        ...,
-        "galleryImagesWithAssets": galleryImages[] {
-          ...,
-          "imageAsset": image.asset->
-        }
-      }`
-    },
-    ctaData: {
-      query: `*[_type == "ctaSection" && _id == "ctaSection"][0]`
     }
   });
 
@@ -43,18 +31,14 @@ export default async function Home() {
   const heroData = data.heroData;
   const portfolioData = data.portfolioData;
   const aboutData = data.aboutData;
-  const galleryData = data.galleryData;
-  const ctaData = data.ctaData;
 
   return (
     <Suspense fallback={<Loading />}>
-      <HomePage
-        heroData={heroData}
-        portfolioData={portfolioData}
-        aboutData={aboutData}
-        galleryData={galleryData}
-        ctaData={ctaData}
+      <ScrollRevealPage 
+        heroData={heroData} 
+        portfolioData={portfolioData} 
+        aboutData={aboutData} 
       />
     </Suspense>
-  )
+  );
 }

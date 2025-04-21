@@ -107,6 +107,7 @@ export default function AboutUs({ aboutData }: AboutUsProps) {
                     alt="Fashion portrait"
                     width={400}
                     height={600}
+                    quality={100}
                     className="w-full h-auto object-cover"
                   />
                 ) : (
@@ -115,6 +116,7 @@ export default function AboutUs({ aboutData }: AboutUsProps) {
                     alt="Fashion portrait"
                     width={400}
                     height={600}
+                    quality={100}
                     className="w-full h-auto object-cover"
                   />
                 )}
@@ -163,12 +165,13 @@ export default function AboutUs({ aboutData }: AboutUsProps) {
                   {aboutData?.galleryImages && aboutData.galleryImages.length > 0 ? (
                     // Hiển thị hình ảnh từ CMS
                     aboutData.galleryImages.map((img, index) => (
-                      <div key={index} className="aspect-square overflow-hidden">
+                      <div key={index} className="aspect-[4/5] overflow-hidden">
                         <Image
-                          src={urlFor(img).width(300).height(300).url()}
+                          src={urlFor(img).width(300).height(375).url()}
                           alt={`Gallery image ${index + 1}`}
                           width={300}
-                          height={300}
+                          height={375}
+                          quality={98}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -177,70 +180,77 @@ export default function AboutUs({ aboutData }: AboutUsProps) {
                     // Hiển thị hình ảnh mặc định nếu không có dữ liệu
                     <>
                       {/* First row */}
-                      <div className="aspect-square overflow-hidden">
+                      <div className="aspect-[4/5] overflow-hidden">
                         <Image
-                          src="/placeholder.svg?height=300&width=300"
+                          src="/placeholder.svg?height=375&width=300"
                           alt="Model with veil"
                           width={300}
-                          height={300}
+                          height={375}
+                          quality={98}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="aspect-square overflow-hidden">
+                      <div className="aspect-[4/5] overflow-hidden">
                         <Image
-                          src="/placeholder.svg?height=300&width=300"
+                          src="/placeholder.svg?height=375&width=300"
                           alt="Model in blue"
                           width={300}
-                          height={300}
+                          height={375}
+                          quality={98}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="aspect-square overflow-hidden">
+                      <div className="aspect-[4/5] overflow-hidden">
                         <Image
-                          src="/placeholder.svg?height=300&width=300"
+                          src="/placeholder.svg?height=375&width=300"
                           alt="Model in purple"
                           width={300}
-                          height={300}
+                          height={375}
+                          quality={98}
                           className="w-full h-full object-cover"
                         />
                       </div>
 
                       {/* Second row */}
-                      <div className="aspect-square overflow-hidden">
+                      <div className="aspect-[4/5] overflow-hidden">
                         <Image
-                          src="/placeholder.svg?height=300&width=300"
+                          src="/placeholder.svg?height=375&width=300"
                           alt="Model in green"
                           width={300}
-                          height={300}
+                          height={375}
+                          quality={98}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="aspect-square overflow-hidden">
+                      <div className="aspect-[4/5] overflow-hidden">
                         <Image
-                          src="/placeholder.svg?height=300&width=300"
+                          src="/placeholder.svg?height=375&width=300"
                           alt="Model with spheres"
                           width={300}
-                          height={300}
+                          height={375}
+                          quality={98}
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="aspect-square overflow-hidden">
+                      <div className="aspect-[4/5] overflow-hidden">
                         <Image
-                          src="/placeholder.svg?height=300&width=300"
+                          src="/placeholder.svg?height=375&width=300"
                           alt="Model on yellow background"
                           width={300}
-                          height={300}
+                          height={375}
+                          quality={98}
                           className="w-full h-full object-cover"
                         />
                       </div>
 
                       {/* Third row (only visible on mobile) */}
-                      <div className="aspect-square overflow-hidden md:hidden">
+                      <div className="aspect-[4/5] overflow-hidden md:hidden">
                         <Image
-                          src="/placeholder.svg?height=300&width=300"
+                          src="/placeholder.svg?height=375&width=300"
                           alt="Model in red"
                           width={300}
-                          height={300}
+                          height={375}
+                          quality={98}
                           className="w-full h-full object-cover"
                         />
                       </div>
