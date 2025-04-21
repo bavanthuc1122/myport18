@@ -1,6 +1,18 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "next build",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "build": {
+    "env": {
+      "NEXT_TELEMETRY_DISABLED": "1",
+      "NEXT_DISABLE_SOURCEMAPS": "1"
+    }
+  }
 }

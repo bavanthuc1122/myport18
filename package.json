@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --no-trace",
-    "build": "next build",
+    "build": "if exist .next rd /s /q .next && next build",
     "start": "next start",
     "lint": "next lint"
   },

@@ -2,14 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   // Tắt tính năng trace để tránh lỗi EPERM
-  experimental: {
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/**',
-        '.next/**',
-      ],
-    },
-  },
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
