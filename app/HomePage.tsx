@@ -89,9 +89,9 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                         loading="eager"
                       />
                     </div>
-                  ) : heroData.videoFile?.asset?.url ? (
+                  ) : heroData.videoFile?.url ? (
                     <video
-                      src={heroData.videoFile.asset.url}
+                      src={heroData.videoFile.url}
                       className="w-full h-full object-cover"
                       autoPlay
                       muted
@@ -180,23 +180,51 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                   className="object-cover"
                   priority
                 />
-              ) : aboutData?.mediaType === 'video' && aboutData?.videoUrl ? (
-                <div className="youtube-container">
-                  <div className="preload-overlay"></div>
-                  <iframe
-                    src={aboutData.videoUrl && aboutData.videoUrl.includes('youtube.com') ?
-                      `https://www.youtube.com/embed/${aboutData.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                      aboutData.videoUrl && aboutData.videoUrl.includes('youtu.be') ?
-                        `https://www.youtube.com/embed/${aboutData.videoUrl.split('youtu.be/')[1]}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                        aboutData.videoUrl
-                    }
-                    title="About background video"
-                    className="youtube-iframe"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    loading="eager"
-                  />
-                </div>
+              ) : aboutData?.mediaType === 'video' ? (
+                {aboutData?.videoFile?.url ? (
+                  // Ưu tiên sử dụng video upload
+                  <>
+                    <video
+                      src={aboutData.videoFile.url}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{ zIndex: 1 }}
+                    />
+                    <div className="video-container" onClick={() => console.log('About Video URL:', aboutData.videoFile.url)}>
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover"
+                      >
+                        <source src={aboutData.videoFile.url} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  </>
+                ) : aboutData?.videoUrl ? (
+                  // Sử dụng YouTube video nếu không có video upload
+                  <div className="youtube-container">
+                    <div className="preload-overlay"></div>
+                    <iframe
+                      src={aboutData.videoUrl && aboutData.videoUrl.includes('youtube.com') ?
+                        `https://www.youtube.com/embed/${aboutData.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                        aboutData.videoUrl && aboutData.videoUrl.includes('youtu.be') ?
+                          `https://www.youtube.com/embed/${aboutData.videoUrl.split('youtu.be/')[1]}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                          aboutData.videoUrl
+                      }
+                      title="About background video"
+                      className="youtube-iframe"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="eager"
+                    />
+                  </div>
+                ) : null
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black"></div>
               )}
@@ -299,23 +327,51 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                   className="object-cover"
                   priority
                 />
-              ) : portfolioData?.mediaType === 'video' && portfolioData?.videoUrl ? (
-                <div className="youtube-container">
-                  <div className="preload-overlay"></div>
-                  <iframe
-                    src={portfolioData.videoUrl && portfolioData.videoUrl.includes('youtube.com') ?
-                      `https://www.youtube.com/embed/${portfolioData.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${portfolioData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                      portfolioData.videoUrl && portfolioData.videoUrl.includes('youtu.be') ?
-                        `https://www.youtube.com/embed/${portfolioData.videoUrl.split('youtu.be/')[1]}?autoplay=1&mute=1&loop=1&playlist=${portfolioData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                        portfolioData.videoUrl
-                    }
-                    title="Background video"
-                    className="youtube-iframe"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    loading="eager"
-                  />
-                </div>
+              ) : portfolioData?.mediaType === 'video' ? (
+                {portfolioData?.videoFile?.url ? (
+                  // Ưu tiên sử dụng video upload
+                  <>
+                    <video
+                      src={portfolioData.videoFile.url}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{ zIndex: 1 }}
+                    />
+                    <div className="video-container" onClick={() => console.log('Portfolio Video URL:', portfolioData.videoFile.url)}>
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover"
+                      >
+                        <source src={portfolioData.videoFile.url} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  </>
+                ) : portfolioData?.videoUrl ? (
+                  // Sử dụng YouTube video nếu không có video upload
+                  <div className="youtube-container">
+                    <div className="preload-overlay"></div>
+                    <iframe
+                      src={portfolioData.videoUrl && portfolioData.videoUrl.includes('youtube.com') ?
+                        `https://www.youtube.com/embed/${portfolioData.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${portfolioData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                        portfolioData.videoUrl && portfolioData.videoUrl.includes('youtu.be') ?
+                          `https://www.youtube.com/embed/${portfolioData.videoUrl.split('youtu.be/')[1]}?autoplay=1&mute=1&loop=1&playlist=${portfolioData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                          portfolioData.videoUrl
+                      }
+                      title="Background video"
+                      className="youtube-iframe"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      loading="eager"
+                    />
+                  </div>
+                ) : null
               ) : (
                 <div
                   style={{ backgroundColor: portfolioData?.backgroundColor || '#000000' }}

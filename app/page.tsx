@@ -11,11 +11,43 @@ export default async function Home() {
   // Batch fetch data - using singleton documents
   const data = await batchFetchSanityData({
     heroData: {
-      query: `*[_type == "heroSection" && _id == "heroSection"][0]`
+      query: `*[_type == "heroSection" && _id == "heroSection"][0] {
+        ...,
+        mediaType,
+        backgroundImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
+        videoUrl,
+        "videoFile": videoFile.asset->{
+          url,
+          mimeType,
+          _id
+        },
+        backgroundColor
+      }`
     },
     portfolioData: {
       query: `*[_type == "portfolioPreview" && _id == "portfolioPreview"][0] {
         ...,
+        mediaType,
+        backgroundImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
+        videoUrl,
+        "videoFile": videoFile.asset->{
+          url,
+          mimeType,
+          _id
+        },
+        backgroundColor,
         "previewImagesWithAssets": previewImages[] {
           ...,
           "imageAsset": image.asset->
@@ -28,10 +60,27 @@ export default async function Home() {
         title,
         description,
         mediaType,
-        backgroundImage,
+        backgroundImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
         videoUrl,
+        "videoFile": videoFile.asset->{
+          url,
+          mimeType,
+          _id
+        },
         backgroundColor,
-        profileImage,
+        profileImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
         skills,
         skillsTitle
       }`
@@ -56,7 +105,24 @@ export default async function Home() {
       }`
     },
     ctaData: {
-      query: `*[_type == "ctaSection" && _id == "ctaSection"][0]`
+      query: `*[_type == "ctaSection" && _id == "ctaSection"][0] {
+        ...,
+        mediaType,
+        backgroundImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
+        videoUrl,
+        "videoFile": videoFile.asset->{
+          url,
+          mimeType,
+          _id
+        },
+        backgroundColor
+      }`
     }
   });
 
@@ -67,7 +133,39 @@ export default async function Home() {
   const galleryData = data.galleryData;
   const ctaData = data.ctaData;
 
-  // Debug: Log gallery data
+  // Debug logs
+  console.log('Hero data:', {
+    mediaType: heroData?.mediaType,
+    videoUrl: heroData?.videoUrl,
+    videoFile: heroData?.videoFile,
+    hasVideoFile: !!heroData?.videoFile,
+    videoFileUrl: heroData?.videoFile?.url
+  });
+
+  console.log('About data:', {
+    mediaType: aboutData?.mediaType,
+    videoUrl: aboutData?.videoUrl,
+    videoFile: aboutData?.videoFile,
+    hasVideoFile: !!aboutData?.videoFile,
+    videoFileUrl: aboutData?.videoFile?.url
+  });
+
+  console.log('Portfolio data:', {
+    mediaType: portfolioData?.mediaType,
+    videoUrl: portfolioData?.videoUrl,
+    videoFile: portfolioData?.videoFile,
+    hasVideoFile: !!portfolioData?.videoFile,
+    videoFileUrl: portfolioData?.videoFile?.url
+  });
+
+  console.log('CTA data:', {
+    mediaType: ctaData?.mediaType,
+    videoUrl: ctaData?.videoUrl,
+    videoFile: ctaData?.videoFile,
+    hasVideoFile: !!ctaData?.videoFile,
+    videoFileUrl: ctaData?.videoFile?.url
+  });
+
   console.log('Gallery Data:', galleryData);
   console.log('Gallery Images:', galleryData?.galleryImages);
 

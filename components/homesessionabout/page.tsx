@@ -20,6 +20,11 @@ interface AboutSectionData {
   backgroundColor?: string;
   backgroundImage?: any;
   videoUrl?: string;
+  videoFile?: {
+    url: string;
+    mimeType: string;
+    _id: string;
+  };
 }
 
 interface AboutUsProps {
@@ -59,25 +64,45 @@ export default function AboutUs({ aboutData }: AboutUsProps) {
           />
           <div className="absolute inset-0 bg-black/30"></div>
         </div>
-      ) : aboutData?.mediaType === 'video' && aboutData?.videoUrl ? (
+      ) : aboutData?.mediaType === 'video' ? (
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="youtube-container">
-            <div className="preload-overlay"></div>
-            <iframe
-              src={aboutData.videoUrl.includes('youtube.com') ?
-                `${aboutData.videoUrl.replace('watch?v=', 'embed/')}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                aboutData.videoUrl.includes('youtu.be') ?
-                  `${aboutData.videoUrl.replace('youtu.be/', 'youtube.com/embed/')}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                  aboutData.videoUrl
-              }
-              title="Background video"
-              className="youtube-iframe"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="eager"
-            />
-          </div>
-          <div className="absolute inset-0 bg-black/30"></div>
+          {aboutData?.videoFile?.url ? (
+            // Ưu tiên sử dụng video upload
+            <>
+              <video
+                src={aboutData.videoFile.url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/30"></div>
+            </>
+          ) : aboutData?.videoUrl ? (
+            // Sử dụng YouTube video nếu không có video upload
+            <>
+              <div className="youtube-container">
+                <div className="preload-overlay"></div>
+                <iframe
+                  src={aboutData.videoUrl.includes('youtube.com') ?
+                    `${aboutData.videoUrl.replace('watch?v=', 'embed/')}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                    aboutData.videoUrl.includes('youtu.be') ?
+                      `${aboutData.videoUrl.replace('youtu.be/', 'youtube.com/embed/')}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                      aboutData.videoUrl
+                  }
+                  title="Background video"
+                  className="youtube-iframe"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="eager"
+                />
+              </div>
+              <div className="absolute inset-0 bg-black/30"></div>
+            </>
+          ) : (
+            <div className="absolute inset-0 bg-black/60"></div>
+          )}
         </div>
       ) : (
         <div
