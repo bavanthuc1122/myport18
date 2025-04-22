@@ -23,14 +23,30 @@ export default async function Home() {
       }`
     },
     aboutData: {
-      query: `*[_type == "aboutSection" && _id == "aboutSection"][0]`
+      query: `*[_type == "aboutSection" && _id == "aboutSection"][0] {
+        ...,
+        title,
+        description,
+        mediaType,
+        backgroundImage,
+        videoUrl,
+        backgroundColor,
+        profileImage,
+        skills,
+        skillsTitle
+      }`
     },
     galleryData: {
       query: `*[_type == "galleryHighlights" && _id == "galleryHighlights"][0] {
         ...,
-        "galleryImagesWithAssets": galleryImages[] {
+        galleryImages[] {
           ...,
-          "imageAsset": image.asset->
+          image,
+          alt,
+          title,
+          description,
+          link,
+          rowSpan
         }
       }`
     },

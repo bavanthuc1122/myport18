@@ -169,7 +169,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
           </ScrollSection>
 
           {/* About Section */}
-          <ScrollSection className="py-32 relative overflow-hidden" id="about">
+          <ScrollSection className="py-16 md:py-32 relative overflow-hidden" id="about">
             {/* Background */}
             <div className="absolute inset-0 z-0" data-scroll data-scroll-speed="-0.2">
               {aboutData?.mediaType === 'image' && aboutData?.backgroundImage ? (
@@ -180,6 +180,23 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                   className="object-cover"
                   priority
                 />
+              ) : aboutData?.mediaType === 'video' && aboutData?.videoUrl ? (
+                <div className="youtube-container">
+                  <div className="preload-overlay"></div>
+                  <iframe
+                    src={aboutData.videoUrl && aboutData.videoUrl.includes('youtube.com') ?
+                      `https://www.youtube.com/embed/${aboutData.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                      aboutData.videoUrl && aboutData.videoUrl.includes('youtu.be') ?
+                        `https://www.youtube.com/embed/${aboutData.videoUrl.split('youtu.be/')[1]}?autoplay=1&mute=1&loop=1&playlist=${aboutData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
+                        aboutData.videoUrl
+                    }
+                    title="About background video"
+                    className="youtube-iframe"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="eager"
+                  />
+                </div>
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black"></div>
               )}
@@ -187,7 +204,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
                 <div>
                   <ScrollReveal
                     origin="left"
@@ -197,7 +214,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                     opacity={0}
                     reset={false}
                   >
-                    <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tighter">{aboutData?.title || 'About Me'}</h2>
+                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 tracking-tighter">{aboutData?.title || 'About Me'}</h2>
                     <div className="prose prose-lg prose-invert">
                       <p className="text-xl mb-6 leading-relaxed">
                         {aboutData?.description || 'Professional photographer with a passion for capturing moments.'}
@@ -207,7 +224,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
 
                     {/* Skills Collection */}
                     <div className="mt-8">
-                      <h3 className="text-2xl font-semibold mb-4">{aboutData?.skillsTitle || 'Skills & Expertise'}</h3>
+                      <h3 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4">{aboutData?.skillsTitle || 'Skills & Expertise'}</h3>
                       {aboutData?.skills && aboutData.skills.length > 0 ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
                           {aboutData.skills.map((skill: string, index: number) => (
@@ -268,7 +285,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
           </ScrollSection>
 
           {/* Portfolio Preview Section */}
-          <ScrollSection className="py-32 relative overflow-hidden" id="portfolio">
+          <ScrollSection className="py-16 md:py-32 relative overflow-hidden" id="portfolio">
             {/* Animated overlay - sẽ trượt lên khi scroll đến */}
             <div className="absolute inset-0 z-10 bg-white transform translate-y-full transition-transform duration-1000 ease-in-out"
                  data-scroll data-scroll-class="translate-y-0" data-scroll-repeat="true" data-scroll-offset="10%"></div>
@@ -317,7 +334,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                 opacity={0}
                 reset={false}
               >
-                <div className="text-center mb-16">
+                <div className="text-center mb-8 md:mb-16">
                   <h2 className="text-4xl md:text-6xl font-bold mb-6">{portfolioData?.title || 'Portfolio'}</h2>
                   <p className="text-xl max-w-2xl mx-auto">
                     {portfolioData?.subtitle1 ? `${portfolioData.subtitle1} ${portfolioData.subtitle2 || ''}` : 'Welcome to the world through my lens'}
@@ -326,7 +343,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
               </ScrollReveal>
 
               {/* Masonry Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-16">
                 {/* Image 1 */}
                 <div data-scroll data-scroll-speed="0.5">
                   <ScrollReveal
@@ -470,11 +487,11 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
               >
                 <div className="w-full bg-black/50 backdrop-blur-sm p-8 md:p-12 rounded-md">
                   <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold uppercase tracking-wider mb-6">
+                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase tracking-wider mb-4 md:mb-6">
                       {portfolioData?.title || 'Portfolio'}
                     </h2>
 
-                    <p className="text-xl md:text-2xl lg:text-3xl font-light mb-8">
+                    <p className="text-lg md:text-xl lg:text-2xl font-light mb-6 md:mb-8">
                       {portfolioData?.subtitle1 ? `${portfolioData.subtitle1} ${portfolioData.subtitle2 || ''}` : 'Welcome to the world through my lens'}
                     </p>
 
@@ -490,7 +507,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
           </ScrollSection>
 
           {/* Gallery Highlights - Masonry Layout */}
-          <ScrollSection className="py-32 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden" id="gallery">
+          <ScrollSection className="py-16 md:py-32 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden" id="gallery">
             {/* Animated overlay - sẽ trượt lên khi scroll đến */}
             <div className="absolute inset-0 z-10 bg-white transform translate-y-full transition-transform duration-1000 ease-in-out"
                  data-scroll data-scroll-class="translate-y-0" data-scroll-repeat="true" data-scroll-offset="10%"></div>
@@ -540,7 +557,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                 opacity={0}
                 reset={false}
               >
-                <div className="text-center mb-16">
+                <div className="text-center mb-8 md:mb-16">
                   <h2 className="text-4xl md:text-6xl font-bold mb-6">{galleryData?.title || 'Gallery Highlights'}</h2>
                   <p className="text-xl max-w-2xl mx-auto">
                     {galleryData?.subtitle || 'A selection of my best work with smooth reveal animations'}
@@ -550,7 +567,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
 
               {/* Masonry Grid - 4 ảnh */}
               <div className="stagger-children" data-scroll data-scroll-class="is-revealed">
-                <div className="my-masonry-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px', gridAutoRows: '0' }}>
+                <div className="my-masonry-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '16px', gridAutoRows: '0' }}>
                   {galleryData?.galleryImages ? (
                     // Nếu có dữ liệu từ Sanity
                     galleryData.galleryImages.map((item: any, index: number) => (
@@ -636,7 +653,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
           </ScrollSection>
 
           {/* CTA Section - Ready to Work Together */}
-          <ScrollSection className="py-32 relative overflow-hidden" id="cta">
+          <ScrollSection className="py-16 md:py-32 relative overflow-hidden" id="cta">
             {/* Animated overlay - sẽ trượt lên khi scroll đến */}
             <div className="absolute inset-0 z-10 bg-white transform translate-y-full transition-transform duration-1000 ease-in-out"
                  data-scroll data-scroll-class="translate-y-0" data-scroll-repeat="true" data-scroll-offset="10%"></div>
@@ -678,7 +695,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-              <div className="max-w-3xl mx-auto text-center">
+              <div className="max-w-3xl mx-auto text-center px-4">
                 <ScrollReveal
                   origin="bottom"
                   distance="100px"
@@ -688,34 +705,34 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                   scale={0.8}
                   reset={false}
                 >
-                  <h2 className="text-5xl md:text-7xl font-bold mb-8">{ctaData?.title || 'Ready to Work Together?'}</h2>
+                  <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8">{ctaData?.title || 'Ready to Work Together?'}</h2>
                   {ctaData?.subtitle && (
-                    <h3 className="text-2xl md:text-3xl font-medium mb-4">{ctaData.subtitle}</h3>
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-medium mb-3 md:mb-4">{ctaData.subtitle}</h3>
                   )}
                   {ctaData?.description ? (
-                    <p className="text-xl md:text-2xl mb-12 leading-relaxed">{ctaData.description}</p>
+                    <p className="text-lg md:text-xl lg:text-2xl mb-8 md:mb-12 leading-relaxed">{ctaData.description}</p>
                   ) : (
-                    <p className="text-xl md:text-2xl mb-12 leading-relaxed">
+                    <p className="text-lg md:text-xl lg:text-2xl mb-8 md:mb-12 leading-relaxed">
                       Let's create something amazing together. Contact me to discuss your project.
                     </p>
                   )}
 
-                  <div className="flex flex-wrap justify-center gap-6">
+                  <div className="flex flex-wrap justify-center gap-4 md:gap-6">
                     {ctaData?.primaryButtonText ? (
-                      <Link href={ctaData.primaryButtonLink || '/contact'} className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-gray-200 transition-colors">
+                      <Link href={ctaData.primaryButtonLink || '/contact'} className="bg-white text-black px-6 md:px-8 py-3 md:py-4 rounded-full font-bold hover:bg-gray-200 transition-colors">
                         {ctaData.primaryButtonText}
                       </Link>
                     ) : (
-                      <Link href="/contact" className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-gray-200 transition-colors">
+                      <Link href="/contact" className="bg-white text-black px-6 md:px-8 py-3 md:py-4 rounded-full font-bold hover:bg-gray-200 transition-colors">
                         Contact Me
                       </Link>
                     )}
                     {ctaData?.secondaryButtonText ? (
-                      <Link href={ctaData.secondaryButtonLink || '/portfolio'} className="bg-transparent border-2 border-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-colors">
+                      <Link href={ctaData.secondaryButtonLink || '/portfolio'} className="bg-transparent border-2 border-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold hover:bg-white/10 transition-colors">
                         {ctaData.secondaryButtonText}
                       </Link>
                     ) : (
-                      <Link href="/portfolio" className="bg-transparent border-2 border-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-colors">
+                      <Link href="/portfolio" className="bg-transparent border-2 border-white px-6 md:px-8 py-3 md:py-4 rounded-full font-bold hover:bg-white/10 transition-colors">
                         View Full Portfolio
                       </Link>
                     )}
