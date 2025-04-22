@@ -588,8 +588,8 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                             {/* Debug: Log image data */}
                             {console.log('Gallery Image Item:', item)}
                             <Image
-                              src={item.image && item.image.asset && item.image.asset.url ?
-                                item.image.asset.url :
+                              src={item.image && item.image.asset ?
+                                urlFor(item.image).width(800).height(1000).url() :
                                 `/placeholder.svg?height=1000&width=800&text=Gallery+${index + 1}`}
                               alt={item.alt || `Gallery image ${index + 1}`}
                               width={800}
