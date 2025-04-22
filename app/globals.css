@@ -49,6 +49,47 @@ section {
   margin-bottom: 8px;
 }
 
+.stagger-children {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  grid-auto-rows: 0;
+}
+
+.masonry-item {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background-color: #1a1a1a;
+  transition: transform 0.3s ease;
+}
+
+.masonry-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.masonry-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Hover overlay for masonry items */
+.masonry-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.masonry-item:hover::after {
+  opacity: 1;
+}
+
 .nav-link {
   padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
@@ -155,6 +196,7 @@ section {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background: #000;
 }
 
 .youtube-iframe {
@@ -166,6 +208,28 @@ section {
   transform: translate(-50%, -50%);
   pointer-events: none;
   border: none;
+  z-index: 1;
+}
+
+/* Video container styles */
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.video-container video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 1;
 }
 
 /* Preload overlay to hide YouTube logo flash */
@@ -176,7 +240,7 @@ section {
   width: 100%;
   height: 100%;
   background-color: #000;
-  z-index: 1;
+  z-index: 2;
   animation: fadeOut 1s ease-in-out 0.5s forwards;
 }
 

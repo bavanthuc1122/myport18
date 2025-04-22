@@ -11,11 +11,43 @@ export default async function Home() {
   // Batch fetch data - using singleton documents
   const data = await batchFetchSanityData({
     heroData: {
-      query: `*[_type == "heroSection" && _id == "heroSection"][0]`
+      query: `*[_type == "heroSection" && _id == "heroSection"][0] {
+        ...,
+        mediaType,
+        backgroundImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
+        videoUrl,
+        "videoFile": videoFile.asset->{
+          url,
+          mimeType,
+          _id
+        },
+        backgroundColor
+      }`
     },
     portfolioData: {
       query: `*[_type == "portfolioPreview" && _id == "portfolioPreview"][0] {
         ...,
+        mediaType,
+        backgroundImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
+        videoUrl,
+        "videoFile": videoFile.asset->{
+          url,
+          mimeType,
+          _id
+        },
+        backgroundColor,
         "previewImagesWithAssets": previewImages[] {
           ...,
           "imageAsset": image.asset->
@@ -28,35 +60,42 @@ export default async function Home() {
         title,
         description,
         mediaType,
-        backgroundImage,
+        backgroundImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
         videoUrl,
+        "videoFile": videoFile.asset->{
+          url,
+          mimeType,
+          _id
+        },
         backgroundColor,
-        profileImage,
+        profileImage {
+          asset->{
+            _id,
+            url,
+            metadata
+          }
+        },
         skills,
         skillsTitle
       }`
     },
-    galleryData: {
-      query: `*[_type == "galleryHighlights" && _id == "galleryHighlights"][0] {
+    // galleryData query removed
+    ctaData: {
+      query: `*[_type == "ctaSection" && _id == "ctaSection"][0] {
         ...,
-        galleryImages[] {
-          ...,
-          image {
-            asset-> {
-              _id,
-              url
-            }
-          },
-          alt,
-          title,
-          description,
-          link,
-          rowSpan
+        videoUrl,
+        "videoFile": videoFile.asset->{
+          url,
+          mimeType,
+          _id
         }
       }`
-    },
-    ctaData: {
-      query: `*[_type == "ctaSection" && _id == "ctaSection"][0]`
     }
   });
 
@@ -64,12 +103,46 @@ export default async function Home() {
   const heroData = data.heroData;
   const portfolioData = data.portfolioData;
   const aboutData = data.aboutData;
-  const galleryData = data.galleryData;
   const ctaData = data.ctaData;
 
-  // Debug: Log gallery data
-  console.log('Gallery Data:', galleryData);
-  console.log('Gallery Images:', galleryData?.galleryImages);
+  // Gallery section has been removed
+
+  // Debug video data - chi tiết hơn
+  console.log('About Video Data:', JSON.stringify({
+    mediaType: aboutData?.mediaType,
+    videoUrl: aboutData?.videoUrl,
+    videoFile: aboutData?.videoFile,
+    hasVideoFileAsset: !!aboutData?.videoFile,
+    videoFileAssetUrl: aboutData?.videoFile?.url,
+    videoFileRaw: JSON.stringify(aboutData?.videoFile)
+  }, null, 2));
+
+  console.log('CTA Video Data:', JSON.stringify({
+    mediaType: ctaData?.mediaType,
+    videoUrl: ctaData?.videoUrl,
+    videoFile: ctaData?.videoFile,
+    hasVideoFileAsset: !!ctaData?.videoFile,
+    videoFileAssetUrl: ctaData?.videoFile?.url,
+    videoFileRaw: JSON.stringify(ctaData?.videoFile)
+  }, null, 2));
+
+  console.log('Portfolio Video Data:', JSON.stringify({
+    mediaType: portfolioData?.mediaType,
+    videoUrl: portfolioData?.videoUrl,
+    videoFile: portfolioData?.videoFile,
+    hasVideoFileAsset: !!portfolioData?.videoFile,
+    videoFileAssetUrl: portfolioData?.videoFile?.url,
+    videoFileRaw: JSON.stringify(portfolioData?.videoFile)
+  }, null, 2));
+
+  console.log('Hero Video Data:', JSON.stringify({
+    mediaType: heroData?.mediaType,
+    videoUrl: heroData?.videoUrl,
+    videoFile: heroData?.videoFile,
+    hasVideoFileAsset: !!heroData?.videoFile,
+    videoFileAssetUrl: heroData?.videoFile?.url,
+    videoFileRaw: JSON.stringify(heroData?.videoFile)
+  }, null, 2));
 
   return (
     <Suspense fallback={<Loading />}>
@@ -77,7 +150,6 @@ export default async function Home() {
         heroData={heroData}
         portfolioData={portfolioData}
         aboutData={aboutData}
-        galleryData={galleryData}
         ctaData={ctaData}
       />
     </Suspense>
