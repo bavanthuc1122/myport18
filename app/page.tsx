@@ -41,7 +41,12 @@ export default async function Home() {
         ...,
         galleryImages[] {
           ...,
-          image,
+          image {
+            asset-> {
+              _id,
+              url
+            }
+          },
           alt,
           title,
           description,
@@ -61,6 +66,10 @@ export default async function Home() {
   const aboutData = data.aboutData;
   const galleryData = data.galleryData;
   const ctaData = data.ctaData;
+
+  // Debug: Log gallery data
+  console.log('Gallery Data:', galleryData);
+  console.log('Gallery Images:', galleryData?.galleryImages);
 
   return (
     <Suspense fallback={<Loading />}>

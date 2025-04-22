@@ -585,9 +585,11 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                           reset={false}
                         >
                           <div className="w-full h-full rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.03] transition-all duration-500">
+                            {/* Debug: Log image data */}
+                            {console.log('Gallery Image Item:', item)}
                             <Image
-                              src={item.image ?
-                                urlFor(item.image).width(800).height(1000).url() :
+                              src={item.image && item.image.asset && item.image.asset.url ?
+                                item.image.asset.url :
                                 `/placeholder.svg?height=1000&width=800&text=Gallery+${index + 1}`}
                               alt={item.alt || `Gallery image ${index + 1}`}
                               width={800}
@@ -595,6 +597,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                               className="w-full h-full object-cover"
                               quality={98}
                             />
+
                             {item.title && (
                               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                                 <h3 className="text-xl font-bold">{item.title}</h3>
