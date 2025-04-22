@@ -3,10 +3,26 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ScrollProvider, ScrollSection, ScrollReveal } from '@/components/scroll';
+import dynamic from 'next/dynamic';
+// Dynamically import scroll components with no SSR
+const ScrollSection = dynamic(
+  () => import('@/components/scroll').then((mod) => mod.ScrollSection),
+  { ssr: false }
+);
+
+const ScrollReveal = dynamic(
+  () => import('@/components/scroll').then((mod) => mod.ScrollReveal),
+  { ssr: false }
+);
 import HeaderPortfolio from "@/components/header-portfolio";
 import Footer from "@/components/footer";
 import { urlFor } from "@/lib/sanity";
+
+// Dynamically import ScrollProvider with no SSR
+const ScrollProvider = dynamic(
+  () => import('@/components/scroll').then((mod) => mod.ScrollProvider),
+  { ssr: false }
+);
 
 interface HomePageProps {
   heroData: any;
@@ -181,7 +197,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                   priority
                 />
               ) : aboutData?.mediaType === 'video' ? (
-                {aboutData?.videoFile?.url ? (
+                aboutData?.videoFile?.url ? (
                   // Ưu tiên sử dụng video upload
                   <>
                     <video
@@ -328,7 +344,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                   priority
                 />
               ) : portfolioData?.mediaType === 'video' ? (
-                {portfolioData?.videoFile?.url ? (
+                portfolioData?.videoFile?.url ? (
                   // Ưu tiên sử dụng video upload
                   <>
                     <video
