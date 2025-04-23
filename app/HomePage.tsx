@@ -405,12 +405,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, ctaData }
                 opacity={0}
                 reset={false}
               >
-                <div className="text-center mb-8 md:mb-16">
-                  <h2 className="text-4xl md:text-6xl font-bold mb-6">{portfolioData?.title || 'Portfolio'}</h2>
-                  <p className="text-xl max-w-2xl mx-auto">
-                    {portfolioData?.subtitle1 ? `${portfolioData.subtitle1} ${portfolioData.subtitle2 || ''}` : 'Welcome to the world through my lens'}
-                  </p>
-                </div>
+                
               </ScrollReveal>
 
               {/* Masonry Grid */}
@@ -505,10 +500,10 @@ export default function HomePage({ heroData, portfolioData, aboutData, ctaData }
                     <div className="aspect-[16/9] rounded-md overflow-hidden transform hover:scale-[1.02] transition-all duration-500 shadow-lg">
                       <Link href={portfolioData?.portfolioLink || '/portfolio'} className="block w-full h-full">
                         <Image
-                          src={portfolioData?.previewImages && portfolioData.previewImages[0]?.image ?
-                            urlFor(portfolioData.previewImages[0].image).width(1000).height(600).url() :
+                          src={portfolioData?.previewImages && portfolioData.previewImages[3]?.image ?
+                            urlFor(portfolioData.previewImages[3].image).width(1000).height(600).url() :
                             "/placeholder.svg?height=600&width=1000"}
-                          alt={portfolioData?.previewImages?.[0]?.alt || "Portfolio image 4"}
+                          alt={portfolioData?.previewImages?.[3]?.alt || "Portfolio image 4"}
                           width={1000}
                           height={600}
                           quality={98}
@@ -531,10 +526,10 @@ export default function HomePage({ heroData, portfolioData, aboutData, ctaData }
                     <div className="col-span-1 aspect-[4/5] rounded-md overflow-hidden transform hover:scale-[1.02] transition-all duration-500 shadow-lg">
                       <Link href={portfolioData?.portfolioLink || '/portfolio'} className="block w-full h-full">
                         <Image
-                          src={portfolioData?.previewImages && portfolioData.previewImages[1]?.image ?
-                            urlFor(portfolioData.previewImages[1].image).width(800).height(1000).url() :
+                          src={portfolioData?.previewImages && portfolioData.previewImages[4]?.image ?
+                            urlFor(portfolioData.previewImages[4].image).width(800).height(1000).url() :
                             "/placeholder.svg?height=1000&width=800"}
-                          alt={portfolioData?.previewImages?.[1]?.alt || "Portfolio image 5"}
+                          alt={portfolioData?.previewImages?.[4]?.alt || "Portfolio image 5"}
                           width={800}
                           height={1000}
                           quality={98}
