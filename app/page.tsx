@@ -85,25 +85,6 @@ export default async function Home() {
         skillsTitle
       }`
     },
-    galleryData: {
-      query: `*[_type == "galleryHighlights" && _id == "galleryHighlights"][0] {
-        ...,
-        galleryImages[] {
-          ...,
-          image {
-            asset-> {
-              _id,
-              url
-            }
-          },
-          alt,
-          title,
-          description,
-          link,
-          rowSpan
-        }
-      }`
-    },
     ctaData: {
       query: `*[_type == "ctaSection" && _id == "ctaSection"][0] {
         ...,
@@ -130,7 +111,6 @@ export default async function Home() {
   const heroData = data.heroData;
   const portfolioData = data.portfolioData;
   const aboutData = data.aboutData;
-  const galleryData = data.galleryData;
   const ctaData = data.ctaData;
 
   // Debug logs
@@ -166,16 +146,12 @@ export default async function Home() {
     videoFileUrl: ctaData?.videoFile?.url
   });
 
-  console.log('Gallery Data:', galleryData);
-  console.log('Gallery Images:', galleryData?.galleryImages);
-
   return (
     <Suspense fallback={<Loading />}>
       <HomePage
         heroData={heroData}
         portfolioData={portfolioData}
         aboutData={aboutData}
-        galleryData={galleryData}
         ctaData={ctaData}
       />
     </Suspense>

@@ -28,11 +28,10 @@ interface HomePageProps {
   heroData: any;
   portfolioData: any;
   aboutData: any;
-  galleryData: any;
   ctaData: any;
 }
 
-export default function HomePage({ heroData, portfolioData, aboutData, galleryData, ctaData }: HomePageProps) {
+export default function HomePage({ heroData, portfolioData, aboutData, ctaData }: HomePageProps) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -578,154 +577,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
             </div>
           </ScrollSection>
 
-          {/* Gallery Highlights - Masonry Layout */}
-          <ScrollSection className="py-16 md:py-32 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden" id="gallery">
-            {/* Animated overlay - sẽ trượt lên khi scroll đến */}
-            <div className="absolute inset-0 z-10 bg-white transform translate-y-full transition-transform duration-1000 ease-in-out"
-                 data-scroll data-scroll-class="translate-y-0" data-scroll-repeat="true" data-scroll-offset="10%"></div>
 
-            {/* Background */}
-            <div className="absolute inset-0 z-0" data-scroll data-scroll-speed="-0.2">
-              {galleryData?.mediaType === 'image' && galleryData?.backgroundImage ? (
-                <Image
-                  src={urlFor(galleryData.backgroundImage).width(1920).height(1080).url()}
-                  alt="Background image"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              ) : galleryData?.mediaType === 'video' && galleryData?.videoUrl ? (
-                <div className="youtube-container">
-                  <div className="preload-overlay"></div>
-                  <iframe
-                    src={galleryData.videoUrl && galleryData.videoUrl.includes('youtube.com') ?
-                      `https://www.youtube.com/embed/${galleryData.videoUrl.split('v=')[1]}?autoplay=1&mute=1&loop=1&playlist=${galleryData.videoUrl.split('v=')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                      galleryData.videoUrl && galleryData.videoUrl.includes('youtu.be') ?
-                        `https://www.youtube.com/embed/${galleryData.videoUrl.split('youtu.be/')[1]}?autoplay=1&mute=1&loop=1&playlist=${galleryData.videoUrl.split('youtu.be/')[1]}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&playsinline=1` :
-                        galleryData.videoUrl
-                    }
-                    title="Background video"
-                    className="youtube-iframe"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    loading="eager"
-                  />
-                </div>
-              ) : (
-                <div
-                  style={{ backgroundColor: galleryData?.backgroundColor || '#000000' }}
-                  className="absolute inset-0"
-                ></div>
-              )}
-              <div className="absolute inset-0 bg-black/60"></div>
-            </div>
-
-            <div className="container mx-auto px-4 relative z-20">
-              <ScrollReveal
-                origin="bottom"
-                distance="50px"
-                duration={1000}
-                delay={200}
-                opacity={0}
-                reset={false}
-              >
-                <div className="text-center mb-8 md:mb-16">
-                  <h2 className="text-4xl md:text-6xl font-bold mb-6">{galleryData?.title || 'Gallery Highlights'}</h2>
-                  <p className="text-xl max-w-2xl mx-auto">
-                    {galleryData?.subtitle || 'A selection of my best work with smooth reveal animations'}
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              {/* Masonry Grid - 4 ảnh */}
-              <div className="stagger-children" data-scroll data-scroll-class="is-revealed">
-                <div className="my-masonry-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '16px', gridAutoRows: '0' }}>
-                  {galleryData?.galleryImages ? (
-                    // Nếu có dữ liệu từ Sanity
-                    galleryData.galleryImages.map((item: any, index: number) => (
-                      <div
-                        key={index}
-                        className="masonry-item"
-                        data-scroll
-                        data-scroll-speed={0.2 + (index * 0.1)}
-                        style={{ gridRowEnd: `span ${item.rowSpan || 35}` }}
-                      >
-                        <ScrollReveal
-                          delay={200 + (index * 100)}
-                          duration={800}
-                          opacity={0}
-                          reset={false}
-                        >
-                          <div className="w-full h-full rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.03] transition-all duration-500">
-                            {/* Debug: Log image data */}
-                            {console.log('Gallery Image Item:', item)}
-                            <Image
-                              src={item.image && item.image.asset ?
-                                urlFor(item.image).width(800).height(1000).url() :
-                                `/placeholder.svg?height=1000&width=800&text=Gallery+${index + 1}`}
-                              alt={item.alt || `Gallery image ${index + 1}`}
-                              width={800}
-                              height={1000}
-                              className="w-full h-full object-cover"
-                              quality={98}
-                            />
-
-                            {item.title && (
-                              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                                <h3 className="text-xl font-bold">{item.title}</h3>
-                                {item.description && <p className="text-sm text-gray-300">{item.description}</p>}
-                              </div>
-                            )}
-                          </div>
-                        </ScrollReveal>
-                      </div>
-                    ))
-                  ) : (
-                    // Fallback nếu không có dữ liệu
-                    [38, 30, 42, 35].map((rowSpan, index) => (
-                      <div
-                        key={index}
-                        className="masonry-item"
-                        data-scroll
-                        data-scroll-speed={0.2 + (index * 0.1)}
-                        style={{ gridRowEnd: `span ${rowSpan}` }}
-                      >
-                        <ScrollReveal
-                          delay={200 + (index * 100)}
-                          duration={800}
-                          opacity={0}
-                          reset={false}
-                        >
-                          <div className="w-full h-full rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.03] transition-all duration-500">
-                            <Image
-                              src={portfolioData?.previewImages && portfolioData.previewImages[index % 3]?.image ?
-                                urlFor(portfolioData.previewImages[index % 3].image).width(800).height(1000).url() :
-                                `/placeholder.svg?height=1000&width=800&text=Gallery+${index + 1}`}
-                              alt={`Gallery image ${index + 1}`}
-                              width={800}
-                              height={1000}
-                              className="w-full h-full object-cover"
-                              quality={98}
-                            />
-                          </div>
-                        </ScrollReveal>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-
-              {galleryData?.buttonText && (
-                <div className="text-center mt-12">
-                  <Link href={galleryData.buttonLink || '/portfolio'} className="inline-block">
-                    <button className="uppercase text-lg md:text-xl tracking-widest border-b-2 border-white pb-1 hover:bg-white hover:text-black transition-all duration-300 px-4 py-2">
-                      {galleryData.buttonText}
-                    </button>
-                  </Link>
-                </div>
-              )}
-            </div>
-          </ScrollSection>
 
           {/* CTA Section - Ready to Work Together */}
           <ScrollSection className="py-16 md:py-32 relative overflow-hidden" id="cta">
@@ -734,8 +586,36 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                  data-scroll data-scroll-class="translate-y-0" data-scroll-repeat="true" data-scroll-offset="10%"></div>
 
             <div className="absolute inset-0 z-0" data-scroll data-scroll-speed="-0.2">
-              {ctaData?.mediaType === 'video' && ctaData?.videoUrl ? (
-                <>
+              {ctaData?.mediaType === 'video' ? (
+                // Kiểm tra cả videoUrl và videoFile
+                ctaData?.videoFile?.url ? (
+                  // Ưu tiên sử dụng video upload
+                  <>
+                    {/* Cách hiển thị video đơn giản hơn */}
+                    <video
+                      src={ctaData.videoFile.url}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{ zIndex: 1 }}
+                    />
+                    <div className="video-container" onClick={() => console.log('CTA Video URL:', ctaData.videoFile.url)}>
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover"
+                      >
+                        <source src={ctaData.videoFile.url} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  </>
+                ) : ctaData?.videoUrl ? (
+                  // Sử dụng YouTube video nếu không có video upload
                   <div className="youtube-container">
                     <div className="preload-overlay"></div>
                     <iframe
@@ -752,7 +632,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, galleryDa
                       loading="eager"
                     />
                   </div>
-                </>
+                ) : null
               ) : ctaData?.mediaType === 'image' && ctaData?.backgroundImage ? (
                 <Image
                   src={urlFor(ctaData.backgroundImage).width(1920).height(1080).url()}
