@@ -563,7 +563,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, ctaData }
 
                     <Link href={portfolioData?.portfolioLink || '/portfolio'} className="inline-block">
                       <button className="uppercase text-lg md:text-xl tracking-widest border-b-2 border-white pb-1 hover:bg-white hover:text-black transition-all duration-300 px-4 py-2">
-                        Explore Gallery
+                        Gallery
                       </button>
                     </Link>
                   </div>
@@ -663,7 +663,7 @@ export default function HomePage({ heroData, portfolioData, aboutData, ctaData }
                     <p className="text-lg md:text-xl lg:text-2xl mb-8 md:mb-12 leading-relaxed">{ctaData.description}</p>
                   ) : (
                     <p className="text-lg md:text-xl lg:text-2xl mb-8 md:mb-12 leading-relaxed">
-                      Let's create something amazing together. Contact me to discuss your project.
+                      
                     </p>
                   )}
 

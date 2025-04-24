@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  .hover-scale {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .hover-scale:active {
+    transform: scale(0.95);
+  }
+
+  @media (hover: hover) {
+    .hover-scale:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
 /* CSS cơ bản */
 
 :root {

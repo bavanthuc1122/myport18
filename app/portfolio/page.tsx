@@ -74,16 +74,20 @@ export default function Portfolio() {
       <HeaderPortfolio />
 
       <main className="mx-auto px-8 sm:px-16 lg:px-24">
-        <div className="pt-32 pb-16 fade-in">
+        <div className="pt-32 pb-6 fade-in">
           <h1 className="text-6xl font-bold mb-2 slide-up">WORK IMAGE</h1>
           <p className="text-gray-400 text-lg slide-up delay-200">Darkness is core of light</p>
         </div>
 
-        <div className="flex justify-center gap-12 mb-16 slide-up delay-300">
+        <div className="flex flex-wrap justify-center gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-8 px-2 sm:px-4 mb-10 slide-up delay-300">
           {categories.map((category, index) => (
             <button
               key={category._id}
-              className={`text-base transition-colors duration-300 ${selectedCategory === category._id ? 'text-white' : 'text-gray-400 hover:text-gray-300'} hover-scale`}
+              className={`text-sm sm:text-base transition-colors duration-300 whitespace-nowrap py-2.5 px-4 sm:py-2 sm:px-3 rounded-full
+                ${selectedCategory === category._id
+                  ? 'text-white bg-gray-800/70 font-medium'
+                  : 'text-gray-400 hover:text-gray-300 bg-gray-800/20 hover:bg-gray-800/30'
+                } hover-scale touch-manipulation`}
               onClick={() => handleCategoryChange(category._id)}
               style={{ animationDelay: `${300 + (index * 100)}ms` }}
             >
