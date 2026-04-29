@@ -1,0 +1,28 @@
+[1mdiff --git a/app/portfolio/page.tsx b/app/portfolio/page.tsx[m
+[1mindex 75d3f57..d609de0 100644[m
+[1m--- a/app/portfolio/page.tsx[m
+[1m+++ b/app/portfolio/page.tsx[m
+[36m@@ -74,16 +74,20 @@[m [mexport default function Portfolio() {[m
+       <HeaderPortfolio />[m
+ [m
+       <main className="mx-auto px-8 sm:px-16 lg:px-24">[m
+[31m-        <div className="pt-32 pb-16 fade-in">[m
+[32m+[m[32m        <div className="pt-32 pb-6 fade-in">[m
+           <h1 className="text-6xl font-bold mb-2 slide-up">WORK IMAGE</h1>[m
+           <p className="text-gray-400 text-lg slide-up delay-200">Darkness is core of light</p>[m
+         </div>[m
+ [m
+[31m-        <div className="flex justify-center gap-12 mb-16 slide-up delay-300">[m
+[32m+[m[32m        <div className="flex flex-wrap justify-center gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-8 px-2 sm:px-4 mb-10 slide-up delay-300">[m
+           {categories.map((category, index) => ([m
+             <button[m
+               key={category._id}[m
+[31m-              className={`text-base transition-colors duration-300 ${selectedCategory === category._id ? 'text-white' : 'text-gray-400 hover:text-gray-300'} hover-scale`}[m
+[32m+[m[32m              className={`text-sm sm:text-base transition-colors duration-300 whitespace-nowrap py-2.5 px-4 sm:py-2 sm:px-3 rounded-full[m
+[32m+[m[32m                ${selectedCategory === category._id[m
+[32m+[m[32m                  ? 'text-white bg-gray-800/70 font-medium'[m
+[32m+[m[32m                  : 'text-gray-400 hover:text-gray-300 bg-gray-800/20 hover:bg-gray-800/30'[m
+[32m+[m[32m                } hover-scale touch-manipulation`}[m
+               onClick={() => handleCategoryChange(category._id)}[m
+               style={{ animationDelay: `${300 + (index * 100)}ms` }}[m
+             >[m

@@ -1,0 +1,12 @@
+{
+  "buildCommand": "next build",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "build": {
+    "env": {
+      "NEXT_TELEMETRY_DISABLED": "1",
+      "NEXT_DISABLE_SOURCEMAPS": "1"
+    }
+  }
+}
